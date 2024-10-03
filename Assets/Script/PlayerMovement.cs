@@ -7,7 +7,7 @@ public class CharacterMovement : MonoBehaviour
     public float moveSpeed = 5f;
     private Rigidbody2D rb;
     private Animator animator;
-    private Vector2 movement;
+    private bool isFacingRight = true; // Track if the character is facing right
 
     void Start()
     {
@@ -17,25 +17,32 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        // Use specific keys for movement (A and D for left and right)
-        movement.x = 0; // Reset movement.x to prevent unintended movement
+        // Get input for left and right movement
+        float moveInput = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetKey(KeyCode.A))
+        // Update animator's isWalking parameter based on input
+        animator.SetBool("isWalking", Mathf.Abs(moveInput) > 0);
+
+        // Flip the character's direction if necessary
+        if (moveInput > 0 && !isFacingRight)
         {
-            movement.x = -1; // Move left
+            Flip();
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (moveInput < 0 && isFacingRight)
         {
-            movement.x = 1; // Move right
+            Flip();
         }
 
-        // Update animator's isWalking parameter
-        animator.SetBool("isWalking", movement.x != 0);
+        // Apply movement
+        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
     }
 
-    void FixedUpdate()
+    // Method to flip the character's direction
+    void Flip()
     {
-        // Apply movement to the Rigidbody2D
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        isFacingRight = !isFacingRight; // Toggle the direction
+        Vector3 scaler = transform.localScale;
+        scaler.x *= -1; // Flip the x-scale of the sprite
+        transform.localScale = scaler;
     }
 }

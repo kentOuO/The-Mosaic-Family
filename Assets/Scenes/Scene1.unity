@@ -395,6 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f467f7fc1d7d4843a7e93d2742c3cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 3
 --- !u!70 &526722272
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -427,8 +428,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.16574764, y: 9.366082}
-  m_Size: {x: 4.988491, y: 18.711172}
+  m_Offset: {x: -0.16574764, y: 9.975477}
+  m_Size: {x: 4.988491, y: 17.492382}
   m_Direction: 0
 --- !u!50 &526722273
 Rigidbody2D:
@@ -456,7 +457,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1001 &727243189
 PrefabInstance:
   m_ObjectHideFlags: 0
