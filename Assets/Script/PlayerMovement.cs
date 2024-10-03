@@ -5,14 +5,19 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public Vector3 spawnPosition = new Vector3(-6f, -3f, 0f); // Set your desired spawn position here
+
     private Rigidbody2D rb;
     private Animator animator;
-    private bool isFacingRight = true; // Track if the character is facing right
+    private bool isFacingRight = true;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        // Set the initial spawn position
+        transform.position = spawnPosition;
     }
 
     void Update()
@@ -40,9 +45,9 @@ public class CharacterMovement : MonoBehaviour
     // Method to flip the character's direction
     void Flip()
     {
-        isFacingRight = !isFacingRight; // Toggle the direction
+        isFacingRight = !isFacingRight;
         Vector3 scaler = transform.localScale;
-        scaler.x *= -1; // Flip the x-scale of the sprite
+        scaler.x *= -1;
         transform.localScale = scaler;
     }
 }

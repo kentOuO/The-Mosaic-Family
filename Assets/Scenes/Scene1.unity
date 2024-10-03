@@ -396,6 +396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+  spawnPosition: {x: -6, y: -3, z: 0}
 --- !u!70 &526722272
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
