@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public float moveSpeed = 5f;           // Normal movement speed
+    public float runSpeed = 10f;            // Speed when running
     public Vector3 spawnPosition = new Vector3(-6f, -4.7f, 0f); // Set your desired spawn position here
-    public float verticalRange = 1f; // Limit for how much the player can move up or down
+    public float verticalRange = 1f;        // Limit for how much the player can move up or down
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -36,8 +37,15 @@ public class CharacterMovement : MonoBehaviour
         // Get input for up and down movement
         float verticalInput = Input.GetAxisRaw("Vertical");
 
-        // Update animator's isWalking parameter based on input
+        // Check if the player is running (holding Shift)
+        bool isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
+        // Update animator's isWalking and isRunning parameters based on input
         animator.SetBool("isWalking", Mathf.Abs(moveInput) > 0 || Mathf.Abs(verticalInput) > 0);
+        animator.SetBool("isRunning", isRunning && (Mathf.Abs(moveInput) > 0 || Mathf.Abs(verticalInput) > 0));
+
+        // Determine the current speed based on whether the player is running or not
+        float currentSpeed = isRunning ? runSpeed : moveSpeed;
 
         // Flip the character's direction if necessary
         if (moveInput > 0 && !isFacingRight)
@@ -50,10 +58,13 @@ public class CharacterMovement : MonoBehaviour
         }
 
         // Calculate target Y position and clamp it within the vertical range
-        float targetY = Mathf.Clamp(rb.position.y + verticalInput * moveSpeed * Time.deltaTime, initialY - verticalRange, initialY + verticalRange);
+        float targetY = Mathf.Clamp(rb.position.y + verticalInput * currentSpeed * Time.deltaTime, initialY - verticalRange, initialY + verticalRange);
 
-        // Apply movement (clamped targetY ensures no boundary shaking)
-        rb.velocity = new Vector2(moveInput * moveSpeed, (targetY - rb.position.y) / Time.deltaTime);
+        // Directly set the Y position to match vertical movement speed
+        rb.position = new Vector2(rb.position.x + moveInput * currentSpeed * Time.deltaTime, targetY);
+
+        // Apply horizontal movement
+        rb.velocity = new Vector2(moveInput * currentSpeed, rb.velocity.y);
     }
 
     // Method to flip the character's direction

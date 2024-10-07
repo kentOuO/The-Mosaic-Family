@@ -5131,8 +5131,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: body/body_up
+    attribute: m_LocalEulerAngles.z
+    path: sleeve/bone_8
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5144,7 +5144,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: body/body_up
+    path: sleeve/bone_8
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5155,8 +5155,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: body/body_up
+    attribute: m_LocalEulerAngles.x
+    path: sleeve/bone_8
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5672,7 +5672,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: sleeve/bone_8
+    path: body/body_up
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5684,7 +5684,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: sleeve/bone_8
+    path: body/body_up
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5696,7 +5696,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: sleeve/bone_8
+    path: body/body_up
     classID: 4
     script: {fileID: 0}
     flags: 0
