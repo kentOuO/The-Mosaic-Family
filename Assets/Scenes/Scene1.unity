@@ -396,7 +396,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  spawnPosition: {x: -6, y: -3, z: 0}
+  spawnPosition: {x: -6, y: -4.25, z: 0}
+  verticalRange: 0.7
 --- !u!70 &526722272
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -447,7 +448,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -591,7 +592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: b98146557bedb124f822e80e26d7fc10, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: b98146557bedb124f822e80e26d7fc10, type: 3}
       propertyPath: m_LocalScale.x
@@ -709,7 +710,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: 2985604a0cd393f469153050ae8c211f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8172261211446949467, guid: 2985604a0cd393f469153050ae8c211f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -918,7 +919,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.4528606}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -929,7 +930,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.09427881}
   m_EdgeRadius: 0
 --- !u!212 &1976514419
 SpriteRenderer:
