@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -108,7 +108,322 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Tableware_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 883
+        width: 37
+        height: 141
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e055cdda5618e314e8a3251b9e2a6bff
+      internalID: -98216948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_1
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 883
+        width: 37
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1d1f4beb98795e41b3c789f83d42ac9
+      internalID: -2031864820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_2
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 883
+        width: 26
+        height: 171
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c9d8be9894322d4c80ea84fb840b212
+      internalID: 1347608056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_3
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 940
+        width: 274
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c239ccb66905864449bd929db7500ee1
+      internalID: 977344965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_4
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 940
+        width: 274
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f26c367ed5b8dd84796d9407c41c80c9
+      internalID: 1931837873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_5
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 799
+        width: 274
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d5fa0e7bf881d447b46c4eb73bb78a9
+      internalID: 1544638706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_6
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 799
+        width: 274
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d8c969af551784448f925fa958fa290
+      internalID: 612443167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_7
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 658
+        width: 274
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9e25b6e36802c843afffb8a85893a3b
+      internalID: 1666957240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_8
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 658
+        width: 274
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 632a99f51dc4183418a60458125429c4
+      internalID: -231819493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_9
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 420
+        width: 260
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e06889cbbd9151e45afa6050a8fba801
+      internalID: -1379282634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_10
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 409
+        width: 260
+        height: 197
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5108b30b6489b6140a076dd511791aba
+      internalID: 675060958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_11
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 210
+        width: 260
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60d688524e919b149ab3a0aa7c36d184
+      internalID: -1844921912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_12
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 210
+        width: 260
+        height: 200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cf53d52cc874154aba9e6be7933adb7
+      internalID: -517326714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_13
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 0
+        width: 260
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5caf24a29b21fcd4c9de73d310244c98
+      internalID: 1692011893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tableware_14
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 0
+        width: 260
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e033d151b711130418c6e0b838e19099
+      internalID: 1017777611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -119,7 +434,22 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Tableware_0: -98216948
+      Tableware_1: -2031864820
+      Tableware_10: 675060958
+      Tableware_11: -1844921912
+      Tableware_12: -517326714
+      Tableware_13: 1692011893
+      Tableware_14: 1017777611
+      Tableware_2: 1347608056
+      Tableware_3: 977344965
+      Tableware_4: 1931837873
+      Tableware_5: 1544638706
+      Tableware_6: 612443167
+      Tableware_7: 1666957240
+      Tableware_8: -231819493
+      Tableware_9: -1379282634
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

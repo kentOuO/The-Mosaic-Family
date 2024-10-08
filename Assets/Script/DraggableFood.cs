@@ -8,8 +8,25 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Transform originalParent;
-    private static List<Vector2> usedPositions = new List<Vector2>(); // Store used positions
-    private const float minDistance = 50f; // Minimum distance between food items
+
+    // 定义固定位置
+    private static readonly Vector2[] fixedPositions = new Vector2[]
+    {
+        new Vector2(-10, 21),  // 食物1的位置
+        new Vector2(-24, 0),   // 食物2的位置
+        new Vector2(13, 45),  // 食物3的位置
+        new Vector2(8, 10)    // 食物4的位置
+    };
+
+    public enum FoodType
+    {
+        Type1,
+        Type2,
+        Type3,
+        Type4
+    }
+
+    public FoodType foodType; // 用于指示食物类型
 
     void Awake()
     {
@@ -49,10 +66,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             // Set as child of the plate
             transform.SetParent(eventData.pointerEnter.transform); 
-            // Generate a random position within the plate
-            RectTransform plateRect = eventData.pointerEnter.GetComponent<RectTransform>();
-            Vector2 randomPosition = GetRandomPositionInPlate(plateRect);
-            rectTransform.anchoredPosition = randomPosition; // Set to random position
+            // 获取固定位置
+            Vector2 fixedPosition = GetFixedPositionForFoodType();
+            rectTransform.anchoredPosition = fixedPosition; // Set to fixed position
         }
         else
         {
@@ -62,37 +78,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-    // Generate a random position within the plate bounds
-    private Vector2 GetRandomPositionInPlate(RectTransform plateRect)
+    // 获取每种食物类型的固定位置
+    private Vector2 GetFixedPositionForFoodType()
     {
-        Vector2 plateSize = plateRect.sizeDelta;
-        Vector2 randomPosition;
-
-        int attempts = 0; // Count the number of attempts to find a valid position
-
-        do
-        {
-            float randomX = Random.Range(-plateSize.x / 2, plateSize.x / 2);
-            float randomY = Random.Range(-plateSize.y / 2, plateSize.y / 2);
-            randomPosition = new Vector2(randomX, randomY);
-
-            attempts++;
-        } while (!IsValidPosition(randomPosition) && attempts < 10); // Retry if the position is invalid
-
-        usedPositions.Add(randomPosition); // Add the used position to the list
-        return randomPosition;
-    }
-
-    // Check if the generated position is far enough from other items
-    private bool IsValidPosition(Vector2 position)
-    {
-        foreach (Vector2 usedPos in usedPositions)
-        {
-            if (Vector2.Distance(usedPos, position) < minDistance) // Too close to another food item
-            {
-                return false;
-            }
-        }
-        return true;
+        return fixedPositions[(int)foodType]; // 返回对应食物类型的固定位置
     }
 }
