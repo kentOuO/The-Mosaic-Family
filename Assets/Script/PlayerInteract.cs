@@ -43,7 +43,7 @@ public class PlayerInteract : MonoBehaviour
 
     private IEnumerator DisplayPuzzleUIWithDelay()
     {
-        yield return new WaitForSeconds(0.7f); // Wait for 0.5 seconds
+        yield return new WaitForSeconds(0.6f); // Wait for 0.5 seconds
 
         // Toggle the specific puzzle UI on or off
         if (currentPuzzleUI != null)

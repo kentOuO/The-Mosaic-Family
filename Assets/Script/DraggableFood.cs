@@ -1,45 +1,26 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Transform originalParent;
-
-    // 定义固定位置
-    private static readonly Vector2[] fixedPositions = new Vector2[]
-    {
-        new Vector2(-10, 21),  // 食物1的位置
-        new Vector2(-24, 0),   // 食物2的位置
-        new Vector2(13, 45),  // 食物3的位置
-        new Vector2(8, 10)    // 食物4的位置
-    };
-
-    public enum FoodType
-    {
-        Type1,
-        Type2,
-        Type3,
-        Type4
-    }
-
-    public FoodType foodType; // 用于指示食物类型
+    private Vector2 originalPosition; // Store the original position of the food
 
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         originalParent = transform.parent; // Store the original parent
+        originalPosition = rectTransform.anchoredPosition; // Store the original position
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         canvasGroup.alpha = 0.6f; // Set transparency
         canvasGroup.blocksRaycasts = false; // Disable raycast detection
-        transform.SetParent(originalParent.parent); // Move the item out of Plate so it's always on top
+        transform.SetParent(originalParent.parent); // Move the item out of its original parent so it's always on top
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -61,26 +42,18 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         canvasGroup.alpha = 1f; // Restore opacity
         canvasGroup.blocksRaycasts = true; // Re-enable raycast detection
 
-        // Check if dropped on a plate
+        // If dropped on a plate
         if (eventData.pointerEnter != null && eventData.pointerEnter.CompareTag("Plate"))
         {
             // Set as child of the plate
-            transform.SetParent(eventData.pointerEnter.transform); 
-            // 获取固定位置
-            Vector2 fixedPosition = GetFixedPositionForFoodType();
-            rectTransform.anchoredPosition = fixedPosition; // Set to fixed position
+            transform.SetParent(eventData.pointerEnter.transform);
+            // Keep the current dragged position if moved to a new plate
         }
         else
         {
-            // Return to original parent and reset position
+            // Return to original parent and reset to the original position if not dropped on a new plate
             transform.SetParent(originalParent);
-            rectTransform.anchoredPosition = Vector2.zero;
+            rectTransform.anchoredPosition = originalPosition; // Reset to original position
         }
-    }
-
-    // 获取每种食物类型的固定位置
-    private Vector2 GetFixedPositionForFoodType()
-    {
-        return fixedPositions[(int)foodType]; // 返回对应食物类型的固定位置
     }
 }

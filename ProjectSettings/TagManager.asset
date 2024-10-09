@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Puzzle
   - Plate
+  - CharacterA
+  - CharacterB
   layers:
   - Default
   - TransparentFX
