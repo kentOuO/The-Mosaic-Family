@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerInteract : MonoBehaviour
 {
-    public GameObject puzzleUI; // Reference to the UI GameObject
+    private GameObject puzzleUI; // Reference to the UI GameObject
     private GameObject currentPuzzleUI; // Reference to the specific puzzle UI currently active
 
     private Animator animator; // Reference to the Animator component
@@ -11,15 +11,32 @@ public class PlayerInteract : MonoBehaviour
     private void Start()
     {
         // Ensure the UI is hidden at the start
-        puzzleUI.SetActive(false);
+        puzzleUI = GameObject.FindGameObjectWithTag("InteractButton"); // Ensure the tag matches your GameObject
+        if (puzzleUI != null)
+        {
+            puzzleUI.SetActive(false); // Hide the UI if found
+        }
+        else
+        {
+            Debug.LogError("Puzzle UI GameObject not found. Make sure it has the 'InteractButton' tag.");
+        }
 
         // Get the Animator component from the player
         animator = GetComponent<Animator>();
-
         if (animator == null)
         {
             Debug.LogError("Animator component is missing on the player object.");
         }
+    }
+
+    // Method to initialize or reset the PlayerInteract state
+    public void Initialize()
+    {
+        if (puzzleUI != null)
+        {
+            puzzleUI.SetActive(false); // Reset puzzle UI visibility
+        }
+        currentPuzzleUI = null; // Reset current puzzle UI reference
     }
 
     private void Update()
@@ -43,7 +60,7 @@ public class PlayerInteract : MonoBehaviour
 
     private IEnumerator DisplayPuzzleUIWithDelay()
     {
-        yield return new WaitForSeconds(0.6f); // Wait for 0.5 seconds
+        yield return new WaitForSeconds(0.6f); // Wait for 0.6 seconds
 
         // Toggle the specific puzzle UI on or off
         if (currentPuzzleUI != null)
@@ -70,7 +87,10 @@ public class PlayerInteract : MonoBehaviour
             Debug.Log("Entered Puzzle Collider"); // Debug log
 
             // Show the generic puzzle UI
-            puzzleUI.SetActive(true);
+            if (puzzleUI != null)
+            {
+                puzzleUI.SetActive(true); // Show the puzzle UI
+            }
 
             // Get the specific puzzle UI from the Puzzle component
             Puzzle puzzleComponent = other.GetComponent<Puzzle>();
@@ -93,7 +113,10 @@ public class PlayerInteract : MonoBehaviour
             Debug.Log("Exited Puzzle Collider"); // Debug log
 
             // Hide the generic puzzle UI
-            puzzleUI.SetActive(false);
+            if (puzzleUI != null)
+            {
+                puzzleUI.SetActive(false); // Hide the generic puzzle UI
+            }
 
             // Hide the specific puzzle UI if it was displayed
             if (currentPuzzleUI != null)

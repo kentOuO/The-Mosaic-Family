@@ -8,6 +8,7 @@ TagManager:
   - Plate
   - CharacterA
   - CharacterB
+  - InteractButton
   layers:
   - Default
   - TransparentFX
