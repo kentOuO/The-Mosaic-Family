@@ -3,25 +3,27 @@ using System.Collections;
 
 public class PlayerInteract : MonoBehaviour
 {
-    private GameObject puzzleUI; // Reference to the UI GameObject
-    private GameObject currentPuzzleUI; // Reference to the specific puzzle UI currently active
-
+    private GameObject currentPuzzleUI; // Reference to the currently active specific Puzzle UI
+    private GameObject interactButton; // Reference to the Interact Button UI
     private Animator animator; // Reference to the Animator component
+    private UIManager uiManager; // Reference to the UIManager
+    private int currentPuzzleIndex; // To keep track of the current puzzle index
 
     private void Start()
     {
-        // Ensure the UI is hidden at the start
-        puzzleUI = GameObject.FindGameObjectWithTag("InteractButton"); // Ensure the tag matches your GameObject
-        if (puzzleUI != null)
+        // Find the UIManager in the scene
+        uiManager = FindObjectOfType<UIManager>();
+
+        if (uiManager != null)
         {
-            puzzleUI.SetActive(false); // Hide the UI if found
+            interactButton = uiManager.GetInteractButton(); // Get Interact Button from the manager
         }
         else
         {
-            Debug.LogError("Puzzle UI GameObject not found. Make sure it has the 'InteractButton' tag.");
+            Debug.LogError("UIManager not found in the scene.");
         }
 
-        // Get the Animator component from the player
+        // Get the player's Animator component
         animator = GetComponent<Animator>();
         if (animator == null)
         {
@@ -29,50 +31,81 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
-    // Method to initialize or reset the PlayerInteract state
-    public void Initialize()
-    {
-        if (puzzleUI != null)
-        {
-            puzzleUI.SetActive(false); // Reset puzzle UI visibility
-        }
-        currentPuzzleUI = null; // Reset current puzzle UI reference
-    }
-
     private void Update()
     {
-        // Check for spacebar input if the UI is active
-        if (currentPuzzleUI != null && Input.GetKeyDown(KeyCode.Space))
+        // Check if the space key is pressed and if the UI is active
+        if (interactButton != null && interactButton.activeSelf && Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Toggling Puzzle UI");
-
-            // Play the interaction animation
-            if (animator != null)
+            // If a puzzle UI is active, exit it
+            if (currentPuzzleUI != null)
             {
-                animator.SetBool("isInteracting", true); // Set the parameter to start interacting
-                Invoke("ResetInteracting", 0.1f); // Automatically reset after 0.1 second
+                ExitPuzzleUI();
+                return; // Exit the update function
             }
 
-            // Start the coroutine to display the puzzle UI with a delay
-            StartCoroutine(DisplayPuzzleUIWithDelay());
+            // Play interaction animation and delay the puzzle entry
+            Debug.Log("Starting interaction, will enter Puzzle UI after delay.");
+            if (animator != null)
+            {
+                animator.SetBool("isInteracting", true); // Set parameter to start interaction
+                Invoke("ResetInteracting", 0.1f); // Automatically reset after 0.1 seconds
+            }
+
+            // Start coroutine for delayed entry into the Puzzle UI
+            StartCoroutine(EnterPuzzleUIDelayed(0.6f)); // 0.5 second delay
+        }
+
+        // Check if the Esc key is pressed to exit the Puzzle UI
+        if (currentPuzzleUI != null && Input.GetKeyDown(KeyCode.Escape))
+        {
+            ExitPuzzleUI();
         }
     }
 
-    private IEnumerator DisplayPuzzleUIWithDelay()
+    private IEnumerator EnterPuzzleUIDelayed(float delay)
     {
-        yield return new WaitForSeconds(0.6f); // Wait for 0.6 seconds
+        // Wait for the specified delay (in seconds)
+        yield return new WaitForSeconds(delay);
 
-        // Toggle the specific puzzle UI on or off
+        Debug.Log("Entering Puzzle UI after delay.");
+
+        // Show the Puzzle UI
+        currentPuzzleUI = uiManager.GetPuzzleUI(currentPuzzleIndex); // Get the specific Puzzle UI based on index
         if (currentPuzzleUI != null)
         {
-            bool isActive = currentPuzzleUI.activeSelf;
-            currentPuzzleUI.SetActive(!isActive); // Set to the opposite of the current state
+            currentPuzzleUI.SetActive(true);
+        }
+
+        // Hide the Interact Button
+        if (interactButton != null)
+        {
+            interactButton.SetActive(false);
+        }
+    }
+
+    private void ExitPuzzleUI()
+    {
+        Debug.Log("Exiting Puzzle UI");
+        currentPuzzleUI.SetActive(false); // Hide the Puzzle UI
+
+        // Show the Interact Button again
+        if (interactButton != null)
+        {
+            interactButton.SetActive(true); // Show Interact Button
+        }
+
+        currentPuzzleUI = null; // Reset current puzzle UI
+
+        // Reset interaction animation
+        if (animator != null)
+        {
+            animator.SetBool("isInteracting", false); // Reset interacting parameter
         }
     }
 
     private void ResetInteracting()
     {
-        // Reset the isInteracting parameter to false after a brief delay
+        // Reset isInteracting parameter to false after a brief delay
         if (animator != null)
         {
             animator.SetBool("isInteracting", false);
@@ -86,21 +119,23 @@ public class PlayerInteract : MonoBehaviour
         {
             Debug.Log("Entered Puzzle Collider"); // Debug log
 
-            // Show the generic puzzle UI
-            if (puzzleUI != null)
-            {
-                puzzleUI.SetActive(true); // Show the puzzle UI
-            }
+            // Try to get the PuzzleIdentifier component
+            PuzzleIdentifier puzzleIdentifier = other.GetComponent<PuzzleIdentifier>();
 
-            // Get the specific puzzle UI from the Puzzle component
-            Puzzle puzzleComponent = other.GetComponent<Puzzle>();
-            if (puzzleComponent != null)
+            // Check if the component exists
+            if (puzzleIdentifier != null)
             {
-                currentPuzzleUI = puzzleComponent.puzzleUI; // Get the specific puzzle UI
+                currentPuzzleIndex = puzzleIdentifier.puzzleIndex; // Set the current puzzle index
+
+                // Show the Interact Button
+                if (interactButton != null)
+                {
+                    interactButton.SetActive(true);
+                }
             }
             else
             {
-                Debug.LogError("No Puzzle component found on the collider object: " + other.name);
+                Debug.LogError("PuzzleIdentifier component is missing on the Puzzle GameObject.");
             }
         }
     }
@@ -112,18 +147,18 @@ public class PlayerInteract : MonoBehaviour
         {
             Debug.Log("Exited Puzzle Collider"); // Debug log
 
-            // Hide the generic puzzle UI
-            if (puzzleUI != null)
+            // Hide the Interact Button
+            if (interactButton != null)
             {
-                puzzleUI.SetActive(false); // Hide the generic puzzle UI
+                interactButton.SetActive(false);
             }
 
-            // Hide the specific puzzle UI if it was displayed
+            // Hide Puzzle UI if it's the current one
             if (currentPuzzleUI != null)
             {
-                currentPuzzleUI.SetActive(false); // Hide the specific puzzle UI when exiting
+                currentPuzzleUI.SetActive(false);
+                currentPuzzleUI = null; // Reset the current puzzle UI
             }
-            currentPuzzleUI = null; // Clear the reference
         }
     }
 }

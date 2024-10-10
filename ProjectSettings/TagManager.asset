@@ -9,6 +9,7 @@ TagManager:
   - CharacterA
   - CharacterB
   - InteractButton
+  - CharacterC
   layers:
   - Default
   - TransparentFX

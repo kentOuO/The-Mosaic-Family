@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;           // Normal movement speed
-    public float runSpeed = 10f;            // Speed when running
+    public float moveSpeed = 3f;           // Normal movement speed
+    public float runSpeed = 6f;            // Speed when running
     public Vector3 spawnPosition = new Vector3(-6f, -4.7f, 0f); // Set your desired spawn position here
-    public float verticalRange = 1f;        // Limit for how much the player can move up or down
+    public float verticalRange = 0.7f;        // Limit for how much the player can move up or down
 
     private Rigidbody2D rb;
     private Animator animator;
