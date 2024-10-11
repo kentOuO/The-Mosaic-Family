@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: 8ebf7bc549626c04a9c14e0457a1b205, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: 8ebf7bc549626c04a9c14e0457a1b205, type: 3}
       propertyPath: m_TagString
@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 8ebf7bc549626c04a9c14e0457a1b205, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.25
+      value: 0.24
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 8ebf7bc549626c04a9c14e0457a1b205, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25
+      value: 0.24
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 8ebf7bc549626c04a9c14e0457a1b205, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.25
+      value: 0.24
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 8ebf7bc549626c04a9c14e0457a1b205, type: 3}
       propertyPath: m_LocalPosition.x
@@ -232,10 +232,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f467f7fc1d7d4843a7e93d2742c3cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
-  runSpeed: 4
+  moveSpeed: 2.5
+  runSpeed: 4.5
   spawnPosition: {x: -6, y: -4.7, z: 0}
-  verticalRange: 1
+  verticalRange: 0.6
 --- !u!114 &2363860379126053509
 MonoBehaviour:
   m_ObjectHideFlags: 0
