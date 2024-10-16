@@ -20,8 +20,7 @@ public class AnxietyTest : MonoBehaviour
 
     void Start()
     {
-        timeLeft = allowedTime;
-        PositionRedZoneRandomly(); // 隨機放置紅色區域
+        ResetGame(); // 在開始時重置遊戲
     }
 
     void Update()
@@ -34,7 +33,14 @@ public class AnxietyTest : MonoBehaviour
         // 玩家按下 F 鍵
         if (Input.GetKeyDown(KeyCode.F))
         {
-            TryPress();
+            if (stopped)
+            {
+                ResetGame(); // 如果遊戲已經停止，按F重新開始
+            }
+            else
+            {
+                TryPress();  // 如果遊戲還在進行中，檢查按F是否在紅色區域內
+            }
         }
 
         // 倒數計時
@@ -133,7 +139,27 @@ public class AnxietyTest : MonoBehaviour
     void LoseGame()
     {
         stopped = true;
-        Debug.Log("You lost the game.");
-        // 在這裡添加失敗邏輯
+        Debug.Log("You lost the game. Press 'F' to restart.");
+        // 玩家失敗後，提示玩家按F重新開始
+    }
+
+    // 重置遊戲
+    void ResetGame()
+    {
+        stopped = false;
+        currentPresses = 0;
+        timeLeft = allowedTime;
+
+        // 重置標記位置
+        marker.anchoredPosition = new Vector2(-bar.rect.width / 2, marker.anchoredPosition.y); // 可以根據需要更改起始位置
+
+        // 重置紅色區域
+        RectTransform redZoneRect = redZone.GetComponent<RectTransform>();
+        redZoneRect.sizeDelta = new Vector2(100, redZoneRect.sizeDelta.y); // 設置初始寬度（根據需要調整）
+        PositionRedZoneRandomly(); // 隨機放置紅色區域
+
+        // 重置速度
+        speed = 200f;
+        Debug.Log("Game restarted.");
     }
 }
