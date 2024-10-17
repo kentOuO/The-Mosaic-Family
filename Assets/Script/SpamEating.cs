@@ -8,12 +8,11 @@ public class SpamEating : MonoBehaviour
     public Text timerText;     // Assign your timer Text (Legacy) in the Inspector
     public Text scoreText;     // Assign your score Text (Legacy) in the Inspector
     public GameObject gameUIPanel; // Assign your UI panel in the Inspector
+    public GameObject leftHandPrefab; // Assign your left hand prefab in the Inspector
+    public GameObject rightHandPrefab; // Assign your right hand prefab in the Inspector
+
     public float gameDuration = 30f; // Game duration in seconds
     public int score = 0;           // Player's score
-
-    // Prefabs for left and right hand animations
-    public GameObject leftHandPrefab; // Assign the left hand prefab in the Inspector
-    public GameObject rightHandPrefab; // Assign the right hand prefab in the Inspector
 
     private float timeRemaining;
     private bool isGameActive = false;
@@ -37,16 +36,14 @@ public class SpamEating : MonoBehaviour
         StopAllCoroutines(); // Stop all running coroutines
         StartCoroutine(ShowReadyMessage()); // Show "Ready?" message before starting the game
 
-        // Instantiate hand animations
-        InstantiateHands();
-    }
-
-    void InstantiateHands()
-    {
+        // Instantiate hands and get their animators
         GameObject leftHand = Instantiate(leftHandPrefab, transform.position, Quaternion.identity);
-        leftHandAnimator = leftHand.GetComponent<Animator>();
-
         GameObject rightHand = Instantiate(rightHandPrefab, transform.position, Quaternion.identity);
+
+        leftHand.transform.localPosition = new Vector3(230, -141, 0); // 左手的位置
+        rightHand.transform.localPosition = new Vector3(1731, -141, 0); // 右手的位置
+
+        leftHandAnimator = leftHand.GetComponent<Animator>();
         rightHandAnimator = rightHand.GetComponent<Animator>();
     }
 
@@ -114,16 +111,9 @@ public class SpamEating : MonoBehaviour
     void HandleInput()
     {
         // Use J and L keys to "eat"
-        if (isGameActive)
+        if (isGameActive && (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.L)))
         {
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                EatItem(true); // Left hand eating
-            }
-            else if (Input.GetKeyDown(KeyCode.L))
-            {
-                EatItem(false); // Right hand eating
-            }
+            EatItem(Input.GetKeyDown(KeyCode.J)); // Pass true if left hand (J), false if right hand (L)
         }
     }
 
@@ -134,23 +124,23 @@ public class SpamEating : MonoBehaviour
             score++; // Increment score
             UpdateScoreText(); // Update score display
 
-            // Trigger animation based on the hand used
+            // Play eating animation
             if (isLeftHand)
             {
                 leftHandAnimator.SetBool("isEating", true);
-                StartCoroutine(StopEatingAnimation(leftHandAnimator)); // Stop animation after a delay
+                StartCoroutine(ResetEatingAnimation(leftHandAnimator));
             }
             else
             {
                 rightHandAnimator.SetBool("isEating", true);
-                StartCoroutine(StopEatingAnimation(rightHandAnimator)); // Stop animation after a delay
+                StartCoroutine(ResetEatingAnimation(rightHandAnimator));
             }
         }
     }
 
-    IEnumerator StopEatingAnimation(Animator animator)
+    IEnumerator ResetEatingAnimation(Animator animator)
     {
-        yield return new WaitForSeconds(1f); // Duration of the eating animation
+        yield return new WaitForSeconds(0.1f); // Wait for half a second (adjust as needed)
         animator.SetBool("isEating", false); // Reset the isEating parameter
     }
 

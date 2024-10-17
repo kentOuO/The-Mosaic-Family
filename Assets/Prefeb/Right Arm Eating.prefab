@@ -13,6 +13,10 @@ PrefabInstance:
       value: Right Arm Eating
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8653719598885068355, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -72,6 +76,42 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -6900818959896083359, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -1815028755888138106, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 386791141387813222, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 558580837604631819, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2454622554369155318, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2590882201004662771, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297364353584691495, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157741701538757237, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311048262651052251, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -79,6 +119,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 642371584789313627}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7236318935434030361}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: 4d8bc8a3c3a749746bd0bc5102946d4a, type: 3}
 --- !u!1 &5536181545392326468 stripped
 GameObject:
@@ -106,3 +149,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!222 &7236318935434030361
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536181545392326468}
+  m_CullTransparentMesh: 1
