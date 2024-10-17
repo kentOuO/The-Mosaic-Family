@@ -11,8 +11,15 @@ public class SpamEating : MonoBehaviour
     public float gameDuration = 30f; // Game duration in seconds
     public int score = 0;           // Player's score
 
+    // Prefabs for left and right hand animations
+    public GameObject leftHandPrefab; // Assign the left hand prefab in the Inspector
+    public GameObject rightHandPrefab; // Assign the right hand prefab in the Inspector
+
     private float timeRemaining;
     private bool isGameActive = false;
+
+    private Animator leftHandAnimator;
+    private Animator rightHandAnimator;
 
     void OnEnable() // When the game UI is enabled, reset the game state
     {
@@ -29,6 +36,18 @@ public class SpamEating : MonoBehaviour
         isGameActive = false; // Ensure the game is not active
         StopAllCoroutines(); // Stop all running coroutines
         StartCoroutine(ShowReadyMessage()); // Show "Ready?" message before starting the game
+
+        // Instantiate hand animations
+        InstantiateHands();
+    }
+
+    void InstantiateHands()
+    {
+        GameObject leftHand = Instantiate(leftHandPrefab, transform.position, Quaternion.identity);
+        leftHandAnimator = leftHand.GetComponent<Animator>();
+
+        GameObject rightHand = Instantiate(rightHandPrefab, transform.position, Quaternion.identity);
+        rightHandAnimator = rightHand.GetComponent<Animator>();
     }
 
     void Update()
@@ -95,19 +114,44 @@ public class SpamEating : MonoBehaviour
     void HandleInput()
     {
         // Use J and L keys to "eat"
-        if (isGameActive && (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.L)))
+        if (isGameActive)
         {
-            EatItem();
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                EatItem(true); // Left hand eating
+            }
+            else if (Input.GetKeyDown(KeyCode.L))
+            {
+                EatItem(false); // Right hand eating
+            }
         }
     }
 
-    void EatItem()
+    void EatItem(bool isLeftHand)
     {
         if (isGameActive) // Ensure score is only added when the game is active
         {
             score++; // Increment score
             UpdateScoreText(); // Update score display
+
+            // Trigger animation based on the hand used
+            if (isLeftHand)
+            {
+                leftHandAnimator.SetBool("isEating", true);
+                StartCoroutine(StopEatingAnimation(leftHandAnimator)); // Stop animation after a delay
+            }
+            else
+            {
+                rightHandAnimator.SetBool("isEating", true);
+                StartCoroutine(StopEatingAnimation(rightHandAnimator)); // Stop animation after a delay
+            }
         }
+    }
+
+    IEnumerator StopEatingAnimation(Animator animator)
+    {
+        yield return new WaitForSeconds(1f); // Duration of the eating animation
+        animator.SetBool("isEating", false); // Reset the isEating parameter
     }
 
     void UpdateScoreText()
