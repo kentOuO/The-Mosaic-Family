@@ -10,6 +10,7 @@ public class SpamEating : MonoBehaviour
     public GameObject gameUIPanel; // Assign your UI panel in the Inspector
     public GameObject leftHandPrefab; // Assign your left hand prefab in the Inspector
     public GameObject rightHandPrefab; // Assign your right hand prefab in the Inspector
+    public GameObject eatSpamGame; 
 
     public float gameDuration = 30f; // Game duration in seconds
     public int score = 0;           // Player's score
@@ -25,7 +26,7 @@ public class SpamEating : MonoBehaviour
         ResetGame();
     }
 
-    void ResetGame() // Reset game state
+    private void ResetGame() // Reset game state
     {
         countdownText.gameObject.SetActive(false);
         score = 0; // Reset score
@@ -36,17 +37,14 @@ public class SpamEating : MonoBehaviour
         StopAllCoroutines(); // Stop all running coroutines
         StartCoroutine(ShowReadyMessage()); // Show "Ready?" message before starting the game
 
-        // Instantiate hands and get their animators
-        GameObject leftHand = Instantiate(leftHandPrefab, transform.position, Quaternion.identity);
-        GameObject rightHand = Instantiate(rightHandPrefab, transform.position, Quaternion.identity);
-
-        leftHand.transform.localPosition = new Vector3(230, -141, 0); // 左手的位置
-        rightHand.transform.localPosition = new Vector3(1731, -141, 0); // 右手的位置
+        // Find hands in the EatSpamGame GameObject
+        GameObject leftHand = Instantiate(leftHandPrefab, transform.position, Quaternion.identity, eatSpamGame.transform);
+        GameObject rightHand = Instantiate(rightHandPrefab, transform.position, Quaternion.identity, eatSpamGame.transform);
 
         leftHandAnimator = leftHand.GetComponent<Animator>();
         rightHandAnimator = rightHand.GetComponent<Animator>();
     }
-
+    
     void Update()
     {
         if (isGameActive)
