@@ -8,8 +8,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private Transform originalParent;
     private Vector2 originalPosition; // Store the original position of the food
 
-    // Health deduction amount for this item
-    public float healthDeductionAmount = 10f; // Change this for each food item
+    // Add a health deduction value for this food item
+    public float healthDeductionValue = 5f; // Set the deduction value for each food type
+    private bool isHealthDeducted = false;   // Track if health has been deducted
 
     void Awake()
     {
@@ -48,19 +49,27 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         // If dropped on a plate
         if (eventData.pointerEnter != null && eventData.pointerEnter.CompareTag("Plate"))
         {
-            // Get the Plate component and deduct health
-            Plate plate = eventData.pointerEnter.GetComponent<Plate>();
-            if (plate != null)
+            if (!isHealthDeducted) // Check if health has already been deducted
             {
-                plate.DeductHealth(healthDeductionAmount); // Pass the deduction amount
+                // Deduct health from the health bar
+                CalBar calBar = FindObjectOfType<CalBar>();
+                calBar.DeductHealth(healthDeductionValue);
+                isHealthDeducted = true; // Mark as used
             }
 
             // Set as child of the plate
             transform.SetParent(eventData.pointerEnter.transform);
-            // Keep the current dragged position if moved to a new plate
         }
         else
         {
+            // If dragged back to the original parent
+            if (isHealthDeducted) // Only restore health if it was deducted
+            {
+                CalBar calBar = FindObjectOfType<CalBar>();
+                calBar.DeductHealth(-healthDeductionValue); // Increase health back when returning
+                isHealthDeducted = false; // Reset the deduction flag
+            }
+
             // Return to original parent and reset to the original position if not dropped on a new plate
             transform.SetParent(originalParent);
             rectTransform.anchoredPosition = originalPosition; // Reset to original position

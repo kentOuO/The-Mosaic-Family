@@ -1030,7 +1030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &408549572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1624,7 +1624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &673794881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1806,7 +1806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &712054086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2052,7 +2052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &739352671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2306,7 +2306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &801695298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2713,7 +2713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &1111419394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3170,7 +3170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &1262048586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3578,7 +3578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &1323915957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3680,7 +3680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &1334280231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3782,7 +3782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &1357873020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3940,7 +3940,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1393119027
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4235,7 +4235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &1564688867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4337,7 +4337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &1600437094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4572,7 +4572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &1681367562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4674,7 +4674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &1691133047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4873,7 +4873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &1708588496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4975,7 +4975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &1722300516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5848,7 +5848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &2059661624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5950,7 +5950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &2077304080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6131,7 +6131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af64655cbe822754ca113320c8f58495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDeductionAmount: 10
+  healthDeductionValue: 5
 --- !u!114 &2126161826
 MonoBehaviour:
   m_ObjectHideFlags: 0
