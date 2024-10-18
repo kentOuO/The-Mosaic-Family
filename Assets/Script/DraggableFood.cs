@@ -8,6 +8,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private Transform originalParent;
     private Vector2 originalPosition; // Store the original position of the food
 
+    // Health deduction amount for this item
+    public float healthDeductionAmount = 10f; // Change this for each food item
+
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -45,6 +48,13 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         // If dropped on a plate
         if (eventData.pointerEnter != null && eventData.pointerEnter.CompareTag("Plate"))
         {
+            // Get the Plate component and deduct health
+            Plate plate = eventData.pointerEnter.GetComponent<Plate>();
+            if (plate != null)
+            {
+                plate.DeductHealth(healthDeductionAmount); // Pass the deduction amount
+            }
+
             // Set as child of the plate
             transform.SetParent(eventData.pointerEnter.transform);
             // Keep the current dragged position if moved to a new plate
