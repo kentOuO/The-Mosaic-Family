@@ -31,7 +31,7 @@ public class AnxietyTest : MonoBehaviour
         }
 
         // 玩家按下 F 鍵
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (stopped)
             {

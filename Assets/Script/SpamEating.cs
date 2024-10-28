@@ -58,10 +58,10 @@ public class SpamEating : MonoBehaviour
     IEnumerator ShowReadyMessage()
     {
         countdownText.gameObject.SetActive(true);
-        countdownText.text = "Ready?\n Press K to Start "; // Display "Ready?"
+        countdownText.text = "Ready?\n Press Space to Start "; // Display "Ready?"
         
         // Wait until the player presses the "K" key
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.K));
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
 
         // Once "K" is pressed, start the countdown
         StartCoroutine(CountdownToStart());
@@ -184,7 +184,7 @@ public class SpamEating : MonoBehaviour
     IEnumerator CountdownToRetry()
     {
         // Wait for the player to press "K"
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.K));
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
 
         // Countdown logic
         for (int i = 3; i > 0; i--)
