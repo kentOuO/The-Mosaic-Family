@@ -1,124 +1,127 @@
 using UnityEngine;
-using UnityEngine.UI; // Required for UI Text
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
 
 public class RockSpawner : MonoBehaviour
 {
-    public GameObject rockPrefab; // 石頭的Prefab
-    public float scrollSpeed = 50f; // 移動速度
+    public GameObject rockPrefab;
+    public float scrollSpeed = 50f;
 
     [Header("Initial Positions for Rocks")]
-    public Vector2[] initialPositions; // 用於設置石頭的初始位置
-    public float respawnPositionX = -800f; // 石頭的重生位置 (螢幕左邊界外)
-    public float disappearOffset = 100f; // 控制石頭消失的位置偏移量
+    public Vector2[] initialPositions;
+    public float respawnPositionX = -800f;
+    public float disappearOffset = 100f;
+    public PlayerMovementInImage playerMovement;
 
-    public Text startText; // UI text for start message
-    public Text countdownText; // UI text for countdown display
-    public Text timerText; // UI text for timer display
+    public Text startText;
+    public Text countdownText;
+    public Text timerText;
+    public Text warningText; // Add a reference for the warning text UI
 
-    private RectTransform[] rocks; // 石頭的RectTransform
-    private int rockCount = 3; // 石頭的數量
-    private List<int> activeRocks; // 用於追踪活躍的石頭索引
-    private bool gameStarted = false; // 控制遊戲開始的布林值
+    private RectTransform[] rocks;
+    private int rockCount = 3;
+    private List<int> activeRocks;
+    private bool gameStarted = false;
 
-    public float countdownDuration = 60f; // Countdown duration in seconds
-    private float timeRemaining; // Time remaining for the countdown
-    private bool isCountingDown = false; // To check if the countdown is active
+    public float countdownDuration = 60f;
+    private float timeRemaining;
+    private bool isCountingDown = false;
 
-    public bool IsGameStarted => gameStarted; // Exposing the gameStarted state
+    // Add this property to expose the gameStarted variable
+    public bool IsGameStarted => gameStarted;
+
+    // Add this line to declare the targetImages array
+    public RectTransform[] targetImages; // Make sure to assign this in the Inspector
 
     void Start()
     {
         rocks = new RectTransform[rockCount];
         activeRocks = new List<int>();
 
-        // Set the start text message
         startText.text = "Press 'Space' To Start";
+        warningText.gameObject.SetActive(false); // Hide warning text initially
         
         for (int i = 0; i < rockCount; i++)
         {
             rocks[i] = Instantiate(rockPrefab, initialPositions[i], Quaternion.identity, transform).GetComponent<RectTransform>();
-            rocks[i].anchoredPosition = new Vector2(respawnPositionX, initialPositions[i].y); // Start off-screen
+            rocks[i].anchoredPosition = new Vector2(respawnPositionX, initialPositions[i].y);
+
+            // 将 rock 放在层级视图中的倒数第二个位置
+            rocks[i].SetSiblingIndex(transform.childCount - 2);
         }
 
-        // Randomly select two rocks to appear initially
         UpdateActiveRocks();
-        countdownText.gameObject.SetActive(false); // Hide countdown initially
-        timerText.gameObject.SetActive(false); // Hide timer initially
+        countdownText.gameObject.SetActive(false);
+        timerText.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        // Start the countdown on space bar press
         if (!gameStarted && Input.GetKeyDown(KeyCode.Space))
         {
-            startText.gameObject.SetActive(false); // Hide start text
-            countdownText.gameObject.SetActive(true); // Show countdown
-            StartCoroutine(StartCountdown()); // Start the countdown coroutine
+            StartGame();
         }
 
-        // Only move rocks and update timer if the game has started
         if (gameStarted)
         {
-            // Move active rocks to the left
-            for (int i = 0; i < activeRocks.Count; i++)
-            {
-                int rockIndex = activeRocks[i];
-                rocks[rockIndex].anchoredPosition += Vector2.left * scrollSpeed * Time.deltaTime;
-
-                // Calculate disappear position
-                float disappearPositionX = -Screen.width / 2 - disappearOffset;
-
-                // Check if rock is off-screen
-                if (rocks[rockIndex].anchoredPosition.x <= disappearPositionX)
-                {
-                    // Respawn the rock at the specified position
-                    rocks[rockIndex].anchoredPosition = new Vector2(respawnPositionX, rocks[rockIndex].anchoredPosition.y);
-
-                    // Randomly select two rocks to respawn
-                    UpdateActiveRocks();
-                    break;
-                }
-            }
-
-            // Update timer if counting down
-            if (isCountingDown)
-            {
-                timeRemaining -= Time.deltaTime; // Decrease time remaining
-                timerText.text = FormatTime(timeRemaining); // Update timer display
-
-                // Check if the countdown has reached zero
-                if (timeRemaining <= 0)
-                {
-                    timeRemaining = 0; // Clamp to zero
-                    isCountingDown = false; // Stop the countdown
-                    timerText.text = "Time's Up!"; // Display message
-                    // Optionally, you can add game over logic here
-                    Debug.Log("Game Over! Time's up!");
-                }
-            }
+            UpdateRocks();
+            UpdateTimer();
         }
     }
 
-    private void UpdateActiveRocks()
+    private void StartGame()
     {
-        activeRocks.Clear();
+        startText.gameObject.SetActive(false);
+        countdownText.gameObject.SetActive(true);
+        StartCoroutine(StartCountdown());
+    }
 
-        // Randomly select two indices for active rocks
-        List<int> indices = new List<int> { 0, 1, 2 };
-        for (int i = 0; i < 2; i++)
+    private void UpdateRocks()
+    {
+        for (int i = 0; i < activeRocks.Count; i++)
         {
-            int randomIndex = indices[Random.Range(0, indices.Count)];
-            activeRocks.Add(randomIndex);
-            indices.Remove(randomIndex);
+            int rockIndex = activeRocks[i];
+            rocks[rockIndex].anchoredPosition += Vector2.left * scrollSpeed * Time.deltaTime;
 
-            // Set the active rock to its initial position
-            rocks[randomIndex].anchoredPosition = initialPositions[randomIndex];
+            foreach (RectTransform targetImage in targetImages)
+            {
+                if (IsOverlapping(rocks[rockIndex], targetImage))
+                {
+                    ShowWarning();
+                    RestartGame();
+                    return;
+                }
+            }
+
+            float disappearPositionX = -Screen.width / 2 - disappearOffset;
+            if (rocks[rockIndex].anchoredPosition.x <= disappearPositionX)
+            {
+                rocks[rockIndex].anchoredPosition = new Vector2(respawnPositionX, rocks[rockIndex].anchoredPosition.y);
+                UpdateActiveRocks();
+                break;
+            }
         }
     }
 
-    // Coroutine for 3-second countdown
+    private void UpdateTimer()
+    {
+        if (isCountingDown)
+        {
+            timeRemaining -= Time.deltaTime;
+            timerText.text = FormatTime(timeRemaining);
+
+            if (timeRemaining <= 0)
+            {
+                timeRemaining = 0;
+                isCountingDown = false;
+                timerText.text = "Time's Up!";
+                Debug.Log("Game Over! Time's up!");
+                RestartGame(); // Automatically restart if time's up
+            }
+        }
+    }
+
     private IEnumerator StartCountdown()
     {
         for (int i = 3; i > 0; i--)
@@ -127,18 +130,84 @@ public class RockSpawner : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
 
-        countdownText.gameObject.SetActive(false); // Hide countdown text
-        timerText.gameObject.SetActive(true); // Show timer text
-        timeRemaining = countdownDuration; // Set initial time remaining
-        isCountingDown = true; // Start the timer
-        gameStarted = true; // Start the game
+        countdownText.gameObject.SetActive(false);
+        timerText.gameObject.SetActive(true);
+        timeRemaining = countdownDuration;
+        isCountingDown = true;
+        gameStarted = true;
+
+        if (playerMovement != null)
+        {
+            playerMovement.SetRunAnimation(true); // Start running animation
+        }
     }
 
-    // Format time for display (MM:SS)
     private string FormatTime(float time)
     {
         int minutes = Mathf.FloorToInt(time / 60);
         int seconds = Mathf.FloorToInt(time % 60);
         return string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    private bool IsOverlapping(RectTransform rect1, RectTransform rect2)
+    {
+        Rect rect1World = RectTransformToScreenSpace(rect1);
+        Rect rect2World = RectTransformToScreenSpace(rect2);
+        return rect1World.Overlaps(rect2World);
+    }
+
+    private Rect RectTransformToScreenSpace(RectTransform transform)
+    {
+        Vector3[] corners = new Vector3[4];
+        transform.GetWorldCorners(corners);
+        return new Rect(corners[0].x, corners[0].y, corners[2].x - corners[0].x, corners[2].y - corners[0].y);
+    }
+
+    private void ShowWarning()
+    {
+        warningText.gameObject.SetActive(true);
+        Invoke("HideWarning", 2f); // Hide after 2 seconds
+    }
+
+    private void HideWarning()
+    {
+        warningText.gameObject.SetActive(false);
+    }
+
+    private void RestartGame()
+    {
+        gameStarted = false;
+        startText.gameObject.SetActive(true);
+        timerText.gameObject.SetActive(false);
+        countdownText.gameObject.SetActive(false);
+        isCountingDown = false;
+        timeRemaining = countdownDuration;
+
+        // Stop running animation
+        if (playerMovement != null)
+        {
+            playerMovement.SetRunAnimation(false);
+        }
+
+        foreach (var rock in rocks)
+        {
+            rock.anchoredPosition = new Vector2(respawnPositionX, rock.anchoredPosition.y);
+        }
+        UpdateActiveRocks();
+    }
+
+    private void UpdateActiveRocks()
+    {
+        activeRocks.Clear();
+
+        List<int> indices = new List<int> { 0, 1, 2 };
+        for (int i = 0; i < 2; i++)
+        {
+            int randomIndex = indices[Random.Range(0, indices.Count)];
+            activeRocks.Add(randomIndex);
+            indices.Remove(randomIndex);
+
+            rocks[randomIndex].anchoredPosition = initialPositions[randomIndex];
+        }
     }
 }
