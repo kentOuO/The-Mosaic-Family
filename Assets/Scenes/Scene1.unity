@@ -862,20 +862,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b206e71a9c72cb4a89280227a90644d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rockPrefab: {fileID: 2783930850572422732, guid: 4126579a58976d5419987f3ae23c37a2, type: 3}
-  scrollSpeed: 200
+  rockPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  scrollSpeed: 300
   initialPositions:
   - {x: 1100, y: -470}
   - {x: 1100, y: -270}
   - {x: 1100, y: -70}
-  respawnPositionX: 1100
-  disappearOffset: 60
+  - {x: 1100, y: -470}
+  - {x: 1100, y: -270}
+  - {x: 1100, y: -70}
+  respawnPositionX: -1100
+  disappearOffset: 50
   playerMovement: {fileID: 6597349902061310126}
   startText: {fileID: 1094834069}
   countdownText: {fileID: 1784169784}
   timerText: {fileID: 1173855557}
   warningText: {fileID: 2003519568}
   countdownDuration: 60
+  speedIncreaseInterval: 5
+  speedIncreaseAmount: 50
   targetImages:
   - {fileID: 783593386}
   - {fileID: 1310516140}

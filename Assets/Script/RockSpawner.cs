@@ -5,7 +5,7 @@ using System.Collections;
 
 public class RockSpawner : MonoBehaviour
 {
-    public GameObject rockPrefab;
+    public List<GameObject> rockPrefabs; // 用於存儲不同的 prefab
     public float scrollSpeed = 50f;
 
     [Header("Initial Positions for Rocks")]
@@ -17,7 +17,7 @@ public class RockSpawner : MonoBehaviour
     public Text startText;
     public Text countdownText;
     public Text timerText;
-    public Text warningText; // Add a reference for the warning text UI
+    public Text warningText;
 
     private RectTransform[] rocks;
     private int rockCount = 3;
@@ -28,11 +28,15 @@ public class RockSpawner : MonoBehaviour
     private float timeRemaining;
     private bool isCountingDown = false;
 
-    // Add this property to expose the gameStarted variable
-    public bool IsGameStarted => gameStarted;
+    // Difficulty scaling variables
+    public float speedIncreaseInterval = 10f; // Interval in seconds for speed increase
+    public float speedIncreaseAmount = 5f; // Amount to increase speed each interval
+    private float nextSpeedIncreaseTime;
 
-    // Add this line to declare the targetImages array
-    public RectTransform[] targetImages; // Make sure to assign this in the Inspector
+    // Other settings
+    public RectTransform[] targetImages; // Target objects to avoid
+
+    public bool IsGameStarted => gameStarted;
 
     void Start()
     {
@@ -40,20 +44,23 @@ public class RockSpawner : MonoBehaviour
         activeRocks = new List<int>();
 
         startText.text = "Press 'Space' To Start";
-        warningText.gameObject.SetActive(false); // Hide warning text initially
-        
+        warningText.gameObject.SetActive(false);
+
         for (int i = 0; i < rockCount; i++)
         {
-            rocks[i] = Instantiate(rockPrefab, initialPositions[i], Quaternion.identity, transform).GetComponent<RectTransform>();
+            // 隨機選擇一個 prefab
+            GameObject randomRockPrefab = rockPrefabs[Random.Range(0, rockPrefabs.Count)];
+            rocks[i] = Instantiate(randomRockPrefab, initialPositions[i], Quaternion.identity, transform).GetComponent<RectTransform>();
             rocks[i].anchoredPosition = new Vector2(respawnPositionX, initialPositions[i].y);
-
-            // 将 rock 放在层级视图中的倒数第二个位置
-            rocks[i].SetSiblingIndex(transform.childCount - 2);
+            rocks[i].SetSiblingIndex(transform.childCount - 2); // Set layer position
         }
 
         UpdateActiveRocks();
         countdownText.gameObject.SetActive(false);
         timerText.gameObject.SetActive(false);
+
+        // Set the first speed increase time
+        nextSpeedIncreaseTime = Time.time + speedIncreaseInterval;
     }
 
     void Update()
@@ -67,6 +74,7 @@ public class RockSpawner : MonoBehaviour
         {
             UpdateRocks();
             UpdateTimer();
+            IncreaseRockSpeedOverTime();
         }
     }
 
@@ -117,7 +125,7 @@ public class RockSpawner : MonoBehaviour
                 isCountingDown = false;
                 timerText.text = "Time's Up!";
                 Debug.Log("Game Over! Time's up!");
-                RestartGame(); // Automatically restart if time's up
+                RestartGame();
             }
         }
     }
@@ -183,7 +191,6 @@ public class RockSpawner : MonoBehaviour
         isCountingDown = false;
         timeRemaining = countdownDuration;
 
-        // Stop running animation
         if (playerMovement != null)
         {
             playerMovement.SetRunAnimation(false);
@@ -199,7 +206,6 @@ public class RockSpawner : MonoBehaviour
     private void UpdateActiveRocks()
     {
         activeRocks.Clear();
-
         List<int> indices = new List<int> { 0, 1, 2 };
         for (int i = 0; i < 2; i++)
         {
@@ -208,6 +214,15 @@ public class RockSpawner : MonoBehaviour
             indices.Remove(randomIndex);
 
             rocks[randomIndex].anchoredPosition = initialPositions[randomIndex];
+        }
+    }
+
+    private void IncreaseRockSpeedOverTime()
+    {
+        if (Time.time >= nextSpeedIncreaseTime)
+        {
+            scrollSpeed += speedIncreaseAmount; // Increase scroll speed
+            nextSpeedIncreaseTime = Time.time + speedIncreaseInterval; // Set time for next increase
         }
     }
 }
