@@ -43,7 +43,7 @@ public class PlayerMovementInImage : MonoBehaviour
             }
             else
             {
-                SetRunAnimation(false);
+                animator.SetBool("isRunning", false);
             }
         }
     }

@@ -18,7 +18,7 @@ public class AnxietyTest : MonoBehaviour
 
     public float redZoneWidthDecrease = 10f; // 每次成功按下後減少的紅色區域寬度
 
-    void Start()
+    void OnEnable()
     {
         ResetGame(); // 在開始時重置遊戲
     }

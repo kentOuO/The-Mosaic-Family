@@ -351,6 +351,7 @@ MonoBehaviour:
   - {fileID: 1393119026}
   - {fileID: 74623599}
   - {fileID: 532042689}
+  - {fileID: 317290861}
   interactButton: {fileID: 977268161}
 --- !u!4 &123187958
 Transform:
@@ -848,7 +849,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   background1: {fileID: 83176539}
   background2: {fileID: 1656259332}
-  scrollSpeed: 250
+  scrollSpeed: 350
   rockSpawner: {fileID: 317290864}
 --- !u!114 &317290864
 MonoBehaviour:
@@ -866,8 +867,7 @@ MonoBehaviour:
   - {fileID: 2783930850572422732, guid: 4126579a58976d5419987f3ae23c37a2, type: 3}
   - {fileID: 2783930850572422732, guid: 123d7116f3172354cb14f9f0d0cab0b6, type: 3}
   - {fileID: 2783930850572422732, guid: 9ca8979fe03d4b043b31e3d424599448, type: 3}
-  - {fileID: 2783930850572422732, guid: e9219fc790ce6e148a23734f4c4fb6d4, type: 3}
-  scrollSpeed: 250
+  scrollSpeed: 300
   initialPositions:
   - {x: 1100, y: -480}
   - {x: 1100, y: -180}
@@ -881,7 +881,7 @@ MonoBehaviour:
   warningText: {fileID: 2003519568}
   countdownDuration: 60
   speedIncreaseInterval: 5
-  speedIncreaseAmount: 0
+  speedIncreaseAmount: 50
   targetImages:
   - {fileID: 783593386}
   - {fileID: 1310516140}

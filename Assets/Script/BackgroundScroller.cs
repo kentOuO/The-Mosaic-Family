@@ -2,19 +2,21 @@ using UnityEngine;
 
 public class BackgroundScroller : MonoBehaviour
 {
-    public RectTransform background1; // 第一張背景圖片
-    public RectTransform background2; // 第二張背景圖片
-    public float scrollSpeed = 50f; // 滾動速度
+    public RectTransform background1; // First background image
+    public RectTransform background2; // Second background image
+    public float scrollSpeed = 50f; // Initial scroll speed
     public RockSpawner rockSpawner; // Reference to RockSpawner
 
     private float backgroundWidth;
+    private float speedIncreaseInterval = 5f; // Increase scroll speed every 5 seconds
+    private float timeSinceLastIncrease = 0f;
 
     void Start()
     {
-        // 假設兩張背景圖片的寬度相同
+        // Assume both background images have the same width
         backgroundWidth = background1.rect.width;
 
-        // 自動設置背景圖片的位置，使它們無縫拼接
+        // Automatically position the background images for seamless scrolling
         background2.anchoredPosition = new Vector2(background1.anchoredPosition.x + backgroundWidth, background1.anchoredPosition.y);
     }
 
@@ -37,6 +39,14 @@ public class BackgroundScroller : MonoBehaviour
             if (background2.anchoredPosition.x <= -backgroundWidth)
             {
                 background2.anchoredPosition += new Vector2(backgroundWidth * 2, 0);
+            }
+
+            // Increase scroll speed every 5 seconds only if the game has started
+            timeSinceLastIncrease += Time.deltaTime;
+            if (timeSinceLastIncrease >= speedIncreaseInterval)
+            {
+                scrollSpeed += 50f; // Increase scroll speed
+                timeSinceLastIncrease = 0f; // Reset the timer
             }
         }
     }

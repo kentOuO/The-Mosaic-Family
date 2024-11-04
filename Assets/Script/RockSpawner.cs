@@ -63,6 +63,30 @@ public class RockSpawner : MonoBehaviour
         nextSpeedIncreaseTime = Time.time + speedIncreaseInterval;
     }
 
+    void OnEnable()
+    {
+        // Reset the game state when the RockSpawner is enabled
+        gameStarted = false;
+        startText.gameObject.SetActive(true);
+        timerText.gameObject.SetActive(false);
+        countdownText.gameObject.SetActive(false);
+        isCountingDown = false;
+        timeRemaining = countdownDuration;
+
+        if (playerMovement != null)
+        {
+            playerMovement.SetRunAnimation(false);
+        }
+
+        // Reset the positions of all rocks
+        foreach (var rock in rocks)
+        {
+            rock.anchoredPosition = new Vector2(respawnPositionX, rock.anchoredPosition.y);
+        }
+
+        UpdateActiveRocks();
+    }
+
     void Update()
     {
         if (!gameStarted && Input.GetKeyDown(KeyCode.Space))
@@ -97,7 +121,7 @@ public class RockSpawner : MonoBehaviour
                 if (IsOverlapping(rocks[rockIndex], targetImage))
                 {
                     ShowWarning();
-                    RestartGame();
+                    ResetGame();
                     return;
                 }
             }
@@ -125,7 +149,7 @@ public class RockSpawner : MonoBehaviour
                 isCountingDown = false;
                 timerText.text = "Time's Up!";
                 Debug.Log("Game Over! Time's up!");
-                RestartGame();
+                ResetGame();
             }
         }
     }
@@ -182,25 +206,10 @@ public class RockSpawner : MonoBehaviour
         warningText.gameObject.SetActive(false);
     }
 
-    private void RestartGame()
+    private void ResetGame()
     {
-        gameStarted = false;
-        startText.gameObject.SetActive(true);
-        timerText.gameObject.SetActive(false);
-        countdownText.gameObject.SetActive(false);
-        isCountingDown = false;
-        timeRemaining = countdownDuration;
-
-        if (playerMovement != null)
-        {
-            playerMovement.SetRunAnimation(false);
-        }
-
-        foreach (var rock in rocks)
-        {
-            rock.anchoredPosition = new Vector2(respawnPositionX, rock.anchoredPosition.y);
-        }
-        UpdateActiveRocks();
+        gameObject.SetActive(false); // Deactivate to reset
+        gameObject.SetActive(true); // Reactivate to trigger OnEnable
     }
 
     private void UpdateActiveRocks()
