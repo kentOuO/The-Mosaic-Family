@@ -883,8 +883,8 @@ MonoBehaviour:
   speedIncreaseInterval: 5
   speedIncreaseAmount: 50
   targetImages:
-  - {fileID: 783593386}
   - {fileID: 1310516140}
+  - {fileID: 783593386}
 --- !u!1 &323429648
 GameObject:
   m_ObjectHideFlags: 0
@@ -10500,7 +10500,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 8db7600337ea05a4ab585e42a3ee369d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
