@@ -51,7 +51,7 @@ public class PlayerMovementInImage : MonoBehaviour
 
     public void SetSpeed(float speed)
     {
-        animator.SetFloat("Speed", speed); // Set the Speed parameter in Animator
+        animator.SetFloat("Speed", 1.0f); // Set the Speed parameter in Animator
     }
 
     // New method to stop the player's movement and animation
@@ -59,14 +59,5 @@ public class PlayerMovementInImage : MonoBehaviour
     {
         moveSpeed = 0; // Stop moving
         animator.SetFloat("Speed", 0.0f); // Stop animation
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Rock")) // Ensure the rock has the "Rock" tag
-        {
-            StopMovement(); // Stop the player when colliding with a rock
-            // Optionally, you can also handle other game over logic here if needed
-        }
     }
 }
