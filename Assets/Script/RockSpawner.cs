@@ -75,7 +75,9 @@ public class RockSpawner : MonoBehaviour
 
         if (playerMovement != null)
         {
-            playerMovement.SetRunAnimation(false);
+            //playerMovement.SetRunAnimation(false);
+            float speed = 0.0f;
+            playerMovement.SetSpeed(speed);
         }
 
         // Reset the positions of all rocks
@@ -170,7 +172,9 @@ public class RockSpawner : MonoBehaviour
 
         if (playerMovement != null)
         {
-            playerMovement.SetRunAnimation(true); // Start running animation
+            //playerMovement.SetRunAnimation(true); // Start running animation
+            float speed = 1.0f;
+            playerMovement.SetSpeed(speed);
         }
     }
 

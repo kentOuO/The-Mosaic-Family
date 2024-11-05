@@ -15,6 +15,7 @@ public class PlayerMovementInImage : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
         animator = GetComponent<Animator>();
+        //animator.SetFloat("Speed", 0.0f);
 
         // Find the RockSpawner component in the scene
         rockSpawner = FindObjectOfType<RockSpawner>();
@@ -39,18 +40,33 @@ public class PlayerMovementInImage : MonoBehaviour
         {
             if (Mathf.Abs(moveY) > 0) // If there is vertical input
             {
-                SetRunAnimation(true);
+                animator.SetFloat("Speed", 1.0f);
             }
             else
             {
-                animator.SetBool("isRunning", false);
+                animator.SetFloat("Speed", 0.0f);
             }
         }
     }
 
-    // Method to set the running animation state
-    public void SetRunAnimation(bool isRunning)
+    public void SetSpeed(float speed)
     {
-        animator.SetBool("isRunning", isRunning);
+        animator.SetFloat("Speed", speed); // Set the Speed parameter in Animator
+    }
+
+    // New method to stop the player's movement and animation
+    public void StopMovement()
+    {
+        moveSpeed = 0; // Stop moving
+        animator.SetFloat("Speed", 0.0f); // Stop animation
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Rock")) // Ensure the rock has the "Rock" tag
+        {
+            StopMovement(); // Stop the player when colliding with a rock
+            // Optionally, you can also handle other game over logic here if needed
+        }
     }
 }
