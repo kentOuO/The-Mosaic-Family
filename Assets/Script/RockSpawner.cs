@@ -5,7 +5,7 @@ using System.Collections;
 
 public class RockSpawner : MonoBehaviour
 {
-    public List<GameObject> rockPrefabs; // 用於存儲不同的 prefab
+    public List<GameObject> rockPrefabs; // Used to store different rock prefabs
     public float scrollSpeed = 50f;
 
     [Header("Initial Positions for Rocks")]
@@ -28,13 +28,13 @@ public class RockSpawner : MonoBehaviour
     private float timeRemaining;
     private bool isCountingDown = false;
 
-    // Difficulty scaling variables
-    public float speedIncreaseInterval = 10f; // Interval in seconds for speed increase
-    public float speedIncreaseAmount = 5f; // Amount to increase speed each interval
+    // Difficulty scaling variables (shared with BackgroundScroller)
+    public float speedIncreaseInterval = 5f;
+    public float speedIncreaseAmount = 50f;
     private float nextSpeedIncreaseTime;
 
     // Other settings
-    public RectTransform[] targetImages; // Target objects to avoid
+    public RectTransform[] targetImages;
 
     public bool IsGameStarted => gameStarted;
 
@@ -48,24 +48,20 @@ public class RockSpawner : MonoBehaviour
 
         for (int i = 0; i < rockCount; i++)
         {
-            // 隨機選擇一個 prefab
             GameObject randomRockPrefab = rockPrefabs[Random.Range(0, rockPrefabs.Count)];
             rocks[i] = Instantiate(randomRockPrefab, initialPositions[i], Quaternion.identity, transform).GetComponent<RectTransform>();
             rocks[i].anchoredPosition = new Vector2(respawnPositionX, initialPositions[i].y);
-            rocks[i].SetSiblingIndex(transform.childCount - 2); // Set layer position
+            rocks[i].SetSiblingIndex(transform.childCount - 2);
         }
 
         UpdateActiveRocks();
         countdownText.gameObject.SetActive(false);
         timerText.gameObject.SetActive(false);
-
-        // Set the first speed increase time
         nextSpeedIncreaseTime = Time.time + speedIncreaseInterval;
     }
 
     void OnEnable()
     {
-        // Reset the game state when the RockSpawner is enabled
         gameStarted = false;
         startText.gameObject.SetActive(true);
         timerText.gameObject.SetActive(false);
@@ -75,12 +71,9 @@ public class RockSpawner : MonoBehaviour
 
         if (playerMovement != null)
         {
-            //playerMovement.SetRunAnimation(false);
-            float speed = 0.0f;
-            playerMovement.SetSpeed(speed);
+            playerMovement.SetSpeed(0.0f);
         }
 
-        // Reset the positions of all rocks
         foreach (var rock in rocks)
         {
             rock.anchoredPosition = new Vector2(respawnPositionX, rock.anchoredPosition.y);
@@ -172,9 +165,7 @@ public class RockSpawner : MonoBehaviour
 
         if (playerMovement != null)
         {
-            //playerMovement.SetRunAnimation(true); // Start running animation
-            float speed = 1.0f;
-            playerMovement.SetSpeed(speed);
+            playerMovement.SetSpeed(1.0f);
         }
     }
 
@@ -202,7 +193,7 @@ public class RockSpawner : MonoBehaviour
     private void ShowWarning()
     {
         warningText.gameObject.SetActive(true);
-        Invoke("HideWarning", 2f); // Hide after 2 seconds
+        Invoke("HideWarning", 2f);
     }
 
     private void HideWarning()
@@ -212,8 +203,8 @@ public class RockSpawner : MonoBehaviour
 
     private void ResetGame()
     {
-        gameObject.SetActive(false); // Deactivate to reset
-        gameObject.SetActive(true); // Reactivate to trigger OnEnable
+        gameObject.SetActive(false);
+        gameObject.SetActive(true);
     }
 
     private void UpdateActiveRocks()
@@ -234,8 +225,8 @@ public class RockSpawner : MonoBehaviour
     {
         if (Time.time >= nextSpeedIncreaseTime)
         {
-            scrollSpeed += speedIncreaseAmount; // Increase scroll speed
-            nextSpeedIncreaseTime = Time.time + speedIncreaseInterval; // Set time for next increase
+            scrollSpeed += speedIncreaseAmount;
+            nextSpeedIncreaseTime = Time.time + speedIncreaseInterval;
         }
     }
 }
