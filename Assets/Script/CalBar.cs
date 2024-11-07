@@ -15,15 +15,6 @@ public class CalBar : MonoBehaviour
         UpdateHealthBar();         // Initial update to the health bar UI
     }
 
-    void Update()
-    {
-        // Deduce health when pressing the "U" key
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            DeductHealth(reduceAmount);
-        }
-    }
-
     public void DeductHealth(float amount) // Change this to public
     {
         // Reduce the current health by the specified amount

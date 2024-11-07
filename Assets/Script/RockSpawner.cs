@@ -7,6 +7,7 @@ public class RockSpawner : MonoBehaviour
 {
     public List<GameObject> rockPrefabs; // Used to store different rock prefabs
     public float scrollSpeed = 50f;
+    private float initialScrollSpeed = 400f;
 
     [Header("Initial Positions for Rocks")]
     public Vector2[] initialPositions;
@@ -40,6 +41,7 @@ public class RockSpawner : MonoBehaviour
 
     void Start()
     {
+        initialScrollSpeed = scrollSpeed; // Store the initial scroll speed
         rocks = new RectTransform[rockCount];
         activeRocks = new List<int>();
 
@@ -63,6 +65,7 @@ public class RockSpawner : MonoBehaviour
     void OnEnable()
     {
         gameStarted = false;
+        scrollSpeed = initialScrollSpeed; // Reset scroll speed to initial value
         startText.gameObject.SetActive(true);
         timerText.gameObject.SetActive(false);
         countdownText.gameObject.SetActive(false);

@@ -42,22 +42,11 @@ public class PlayerMovementInImage : MonoBehaviour
             {
                 animator.SetFloat("Speed", 1.0f);
             }
-            else
-            {
-                animator.SetFloat("Speed", 0.0f);
-            }
         }
     }
 
     public void SetSpeed(float speed)
     {
         animator.SetFloat("Speed", 1.0f); // Set the Speed parameter in Animator
-    }
-
-    // New method to stop the player's movement and animation
-    public void StopMovement()
-    {
-        moveSpeed = 0; // Stop moving
-        animator.SetFloat("Speed", 0.0f); // Stop animation
     }
 }

@@ -6,12 +6,14 @@ public class BackgroundScroller : MonoBehaviour
     public RectTransform background2;
     public float scrollSpeed = 50f;
     public float preGameScrollSpeed = 20f;
+    private float initialScrollSpeed = 450f;
     public RockSpawner rockSpawner;
 
     private float backgroundWidth;
 
     void Start()
     {
+        initialScrollSpeed = scrollSpeed; // Store the initial scroll speed
         backgroundWidth = background1.rect.width;
         background2.anchoredPosition = new Vector2(background1.anchoredPosition.x + backgroundWidth, background1.anchoredPosition.y);
     }
@@ -37,6 +39,8 @@ public class BackgroundScroller : MonoBehaviour
         }
         else
         {
+            scrollSpeed = initialScrollSpeed; // Reset scroll speed to initial value
+
             background1.anchoredPosition += Vector2.left * preGameScrollSpeed * Time.deltaTime;
             background2.anchoredPosition += Vector2.left * preGameScrollSpeed * Time.deltaTime;
 
