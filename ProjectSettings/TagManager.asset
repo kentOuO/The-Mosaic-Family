@@ -12,6 +12,8 @@ TagManager:
   - CharacterC
   - CharacterD
   - SisterExercise
+  - CharacterE
+  - Door
   layers:
   - Default
   - TransparentFX
