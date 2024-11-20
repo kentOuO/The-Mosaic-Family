@@ -28,7 +28,7 @@ public class DoorManager : MonoBehaviour
         uiManager = FindObjectOfType<UIManager>();
         if (uiManager != null)
         {
-            interactButton = uiManager.GetInteractButton(); // Get Interact Button from the manager
+            interactButton = uiManager.GetDoorInteractButton(); // Get Door Interact Button from the manager
         }
         else
         {
