@@ -14,6 +14,7 @@ TagManager:
   - SisterExercise
   - CharacterE
   - Door
+  - Furniture
   layers:
   - Default
   - TransparentFX
