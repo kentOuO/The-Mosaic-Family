@@ -22,6 +22,10 @@ public class DoorManager : MonoBehaviour
     // LoadingPage UI Reference
     public GameObject loadingPageUI; // Reference to the LoadingPage UI Canvas
 
+    // Crossfade Canvas and Animator
+    public GameObject crossfadeCanvas; // Reference to the Crossfade Canvas GameObject
+    private Animator crossfadeAnimator; // Reference to the Animator on the Crossfade Canvas
+
     private void Start()
     {
         // Find the UIManager in the scene
@@ -48,6 +52,17 @@ public class DoorManager : MonoBehaviour
 
         if (cameraConfiner == null)
             cameraConfiner = FindObjectOfType<CinemachineConfiner2D>();
+
+        // Ensure the Crossfade Canvas is assigned and retrieve its Animator
+        if (crossfadeCanvas != null)
+        {
+            crossfadeAnimator = crossfadeCanvas.GetComponent<Animator>();
+            crossfadeCanvas.SetActive(false); // Deactivate the canvas initially
+        }
+        else
+        {
+            Debug.LogError("Crossfade Canvas is not assigned in the Inspector.");
+        }
     }
 
     private void Update()
@@ -65,23 +80,29 @@ public class DoorManager : MonoBehaviour
         {
             // Open the door
             doorAnimator.SetBool("isOpen", true);
-            StartCoroutine(ResetDoorAfterDelay(doorOpenDelay)); // Reset door animation after delay
-            StartCoroutine(TeleportAndMoveCameraAfterDelay(teleportDelay)); // Teleport player and move camera after delay
+            StartCoroutine(HandleCrossfadeAndTeleport());
         }
     }
 
-    private IEnumerator ResetDoorAfterDelay(float delay)
+    private IEnumerator HandleCrossfadeAndTeleport()
     {
-        yield return new WaitForSeconds(delay);
-        if (doorAnimator != null)
+        // Activate the crossfade canvas and play the FadeIn animation
+        if (crossfadeCanvas != null && crossfadeAnimator != null)
         {
-            doorAnimator.SetBool("isOpen", false); // Reset the isOpen parameter after the door animation finishes
-        }
-    }
+            crossfadeCanvas.SetActive(true);
+            crossfadeAnimator.SetTrigger("FadeIn");
+            yield return new WaitForSeconds(1f); // Wait for FadeIn animation to complete
 
-    private IEnumerator TeleportAndMoveCameraAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
+            crossfadeCanvas.SetActive(false); // Deactivate the canvas after FadeIn animation
+        }
+
+        // Show the LoadingPage UI
+        if (loadingPageUI != null)
+        {
+            loadingPageUI.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(4f); // Wait for loading duration
 
         // Teleport the player
         if (teleportTarget != null)
@@ -96,18 +117,12 @@ public class DoorManager : MonoBehaviour
                 Debug.LogError("PlayerInteract component not found.");
             }
         }
-        else
-        {
-            Debug.LogError("Teleport target is not set.");
-        }
 
-        // Move the camera to the new bounds
+        // Update the camera bounds
         if (cameraConfiner != null && newCameraBounds != null)
         {
-            // Update the camera confiner to the new polygon bounds
             cameraConfiner.m_BoundingShape2D = newCameraBounds;
 
-            // Set the virtual camera to the new position (same position as teleport target)
             if (virtualCamera != null)
             {
                 virtualCamera.transform.position = teleportTarget.position;
@@ -118,16 +133,20 @@ public class DoorManager : MonoBehaviour
             Debug.LogError("Cinemachine Confiner or New Camera Bounds not set.");
         }
 
-        // Show the LoadingPage UI for 3 seconds
+        // Hide the LoadingPage UI
         if (loadingPageUI != null)
         {
-            loadingPageUI.SetActive(true); // Show LoadingPage
-            yield return new WaitForSeconds(4f); // Wait for 3 seconds
-            loadingPageUI.SetActive(false); // Hide LoadingPage
+            loadingPageUI.SetActive(false);
         }
-        else
+
+        // Reactivate the crossfade canvas and play the FadeOut animation
+        if (crossfadeCanvas != null && crossfadeAnimator != null)
         {
-            Debug.LogError("LoadingPage UI is not assigned.");
+            crossfadeCanvas.SetActive(true);
+            crossfadeAnimator.SetTrigger("FadeOut");
+            yield return new WaitForSeconds(1f); // Wait for FadeOut animation to complete
+
+            crossfadeCanvas.SetActive(false); // Deactivate the canvas after FadeOut animation
         }
     }
 
