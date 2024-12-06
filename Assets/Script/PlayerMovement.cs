@@ -31,23 +31,18 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        // Get input for left and right movement
         float moveInput = Input.GetAxisRaw("Horizontal");
-
-        // Get input for up and down movement
         float verticalInput = Input.GetAxisRaw("Vertical");
-
-        // Check if the player is running (holding Shift)
         bool isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
-        // Update animator's isWalking and isRunning parameters based on input
-        animator.SetBool("isWalking", Mathf.Abs(moveInput) > 0 || Mathf.Abs(verticalInput) > 0);
-        animator.SetBool("isRunning", isRunning && (Mathf.Abs(moveInput) > 0 || Mathf.Abs(verticalInput) > 0));
+        // Calculate movement speed
+        float currentSpeed = Mathf.Sqrt(moveInput * moveInput + verticalInput * verticalInput) * (isRunning ? runSpeed : moveSpeed);
 
-        // Determine the current speed based on whether the player is running or not
-        float currentSpeed = isRunning ? runSpeed : moveSpeed;
+        // Update Animator parameters
+        animator.SetFloat("Speed", currentSpeed);
+        animator.SetBool("isRunning", isRunning);
 
-        // Flip the character's direction if necessary
+        // Flip the character if necessary
         if (moveInput > 0 && !isFacingRight)
         {
             Flip();
@@ -57,14 +52,9 @@ public class CharacterMovement : MonoBehaviour
             Flip();
         }
 
-        // Calculate target Y position and clamp it within the vertical range
+        // Clamp vertical movement and apply position changes
         float targetY = Mathf.Clamp(rb.position.y + verticalInput * currentSpeed * Time.deltaTime, initialY - verticalRange, initialY + verticalRange);
-
-        // Directly set the Y position to match vertical movement speed
         rb.position = new Vector2(rb.position.x + moveInput * currentSpeed * Time.deltaTime, targetY);
-
-        // Apply horizontal movement
-        rb.velocity = new Vector2(moveInput * currentSpeed, rb.velocity.y);
     }
 
     // Method to flip the character's direction
