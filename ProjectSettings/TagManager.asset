@@ -19,10 +19,10 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Character
+  - 
   - Water
   - UI
-  - Hand
+  - Character
   - Mirror
   - 
   - 
