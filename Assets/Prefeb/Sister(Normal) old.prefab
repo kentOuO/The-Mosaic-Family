@@ -1235,7 +1235,7 @@ GameObject:
   - component: {fileID: 9019240420860516302}
   - component: {fileID: 2507173904069033032}
   m_Layer: 0
-  m_Name: Sister(Normal)
+  m_Name: Sister(Normal) old
   m_TagString: CharacterA
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

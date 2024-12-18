@@ -80,9 +80,20 @@ public class DoorManager : MonoBehaviour
         {
             // Open the door
             doorAnimator.SetBool("isOpen", true);
+            StartCoroutine(CloseDoorAfterDelay(2f));
             StartCoroutine(HandleCrossfadeAndTeleport());
         }
     }
+
+    private IEnumerator CloseDoorAfterDelay(float delay)
+{
+    yield return new WaitForSeconds(delay);
+
+    if (doorAnimator != null)
+    {
+        doorAnimator.SetBool("isOpen", false); // Close the door
+    }
+}
 
     private IEnumerator HandleCrossfadeAndTeleport()
     {
