@@ -1,80 +1,66 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class Toilet : MonoBehaviour, IPointerClickHandler
+public class ToiletInteraction : MonoBehaviour
 {
-    public GameObject targetToHide; // Specify the GameObject to hide
-    public Animator animator; // Animator to control the animation
-    private bool isClicked = false;
+    private Animator animator;
+    private Vector2 swipeStartPos;
+    private bool isSwiping;
 
-    void Start()
+    [SerializeField]
+    private BoxCollider2D detectionCollider;
+
+    private void Start()
     {
-        // If no target is set, default to hiding the current GameObject
-        if (targetToHide == null)
+        animator = GetComponent<Animator>();
+        if (detectionCollider == null)
         {
-            targetToHide = gameObject;
+            detectionCollider = GetComponent<BoxCollider2D>();
         }
 
-        // Automatically find the Animator if not set
-        if (animator == null)
+        if (detectionCollider == null)
         {
-            animator = GetComponent<Animator>();
-        }
-
-        if (animator == null)
-        {
-            Debug.LogError("No Animator component found. Please assign an Animator.");
+            Debug.LogError("No BoxCollider2D attached or assigned!");
         }
     }
 
-    void OnEnable()
+    private void Update()
     {
-        // Reset the click state when the GameObject is reactivated
-        isClicked = false;
+        HandleMouseInput();
+    }
 
-        // Reset the animator state
-        if (animator != null)
+    private void HandleMouseInput()
+    {
+        if (Input.GetMouseButtonDown(0)) // Left mouse button pressed
         {
-            animator.SetBool("isClicked", false);
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (detectionCollider.OverlapPoint(mousePosition))
+            {
+                swipeStartPos = mousePosition;
+                isSwiping = true;
+            }
+        }
+        else if (Input.GetMouseButtonUp(0) && isSwiping) // Left mouse button released
+        {
+            Vector2 mouseEndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            DetectSwipe(mouseEndPos);
+            isSwiping = false;
         }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    private void DetectSwipe(Vector2 endPos)
     {
-        if (!isClicked && animator != null)
+        float verticalSwipeDistance = endPos.y - swipeStartPos.y;
+
+        if (Mathf.Abs(verticalSwipeDistance) > 0.5f) // Threshold to avoid accidental triggers
         {
-            isClicked = true;
-
-            // Set the "isClicked" bool to true
-            animator.SetBool("isClicked", true);
-
-            // Start a coroutine to reset the "isClicked" bool after 1 second
-            StartCoroutine(ResetAnimation(1f));
-
-            // Start the coroutine to hide the target GameObject
-            StartCoroutine(HideAfterDelay(2f));
-        }
-    }
-
-    private System.Collections.IEnumerator ResetAnimation(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        // Set the "isClicked" bool back to false
-        if (animator != null)
-        {
-            animator.SetBool("isClicked", false);
-        }
-    }
-
-    private System.Collections.IEnumerator HideAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        // Hide the specified GameObject
-        if (targetToHide != null)
-        {
-            targetToHide.SetActive(false);
+            if (verticalSwipeDistance > 0) // Swipe up
+            {
+                animator.SetBool("isOpen", true);
+            }
+            else if (verticalSwipeDistance < 0) // Swipe down
+            {
+                animator.SetBool("isOpen", false);
+            }
         }
     }
 }
