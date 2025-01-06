@@ -6,8 +6,8 @@ public class TrainerExercise : MonoBehaviour
     private Animator animator;
     private Vector3 fixedPosition;
 
-    private int previousChoice = -1; // Store the last chosen animation
-    private int repeatCount = 0; // Count how many times the same animation has repeated
+    private float previousChoice = -1; // Store the last chosen animation
+    private float repeatCount = 0; // Count how many times the same animation has repeated
 
     void Start()
     {
@@ -26,33 +26,36 @@ public class TrainerExercise : MonoBehaviour
     {
         while (true)
         {
-            ResetBooleans();
-
             int randomChoice;
             do
             {
                 randomChoice = Random.Range(1, 5);
             } while (!IsValidChoice(randomChoice));
 
-            // Perform the chosen animation
+            // Perform the chosen animation using triggers
             switch (randomChoice)
             {
                 case 1:
-                    animator.SetBool("isUp", true);
+                    animator.SetTrigger("isUp");
                     break;
                 case 2:
-                    animator.SetBool("isDown", true);
+                    animator.SetTrigger("isDown");
                     break;
                 case 3:
-                    animator.SetBool("isLeft", true);
+                    animator.SetTrigger("isLeft");
                     break;
                 case 4:
-                    animator.SetBool("isRight", true);
+                    animator.SetTrigger("isRight");
                     break;
             }
 
             previousChoice = randomChoice; // Update the previous choice
-            yield return new WaitForSeconds(Random.Range(2f, 4f)); // Wait before the next animation
+            // Wait for the directional animation to complete
+            yield return new WaitForSeconds(1.4f); 
+
+            // Play the idle animation for 1 second
+            animator.SetTrigger("isIdle");
+            yield return new WaitForSeconds(Random.Range(2f, 4f));// Wait 1 second before the next animation
         }
     }
 
@@ -69,13 +72,5 @@ public class TrainerExercise : MonoBehaviour
         }
 
         return repeatCount <= 3; // Allow only up to 3 consecutive repeats
-    }
-
-    void ResetBooleans()
-    {
-        animator.SetBool("isUp", false);
-        animator.SetBool("isDown", false);
-        animator.SetBool("isLeft", false);
-        animator.SetBool("isRight", false);
     }
 }

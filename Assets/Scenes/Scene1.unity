@@ -14735,6 +14735,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: b7ccca0fe076e0140a7fdbbe39face5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1684404702}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: b7ccca0fe076e0140a7fdbbe39face5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1684404704}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: b7ccca0fe076e0140a7fdbbe39face5c, type: 3}
 --- !u!1 &1684404698 stripped
 GameObject:
@@ -14801,6 +14804,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02af84a5e6042e04d875b82ffcdc33f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &1684404704
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684404698}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 32.354885, y: 9.794983}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 12.170853, y: 39.60356}
+  m_EdgeRadius: 0
 --- !u!1 &1691133043
 GameObject:
   m_ObjectHideFlags: 0
