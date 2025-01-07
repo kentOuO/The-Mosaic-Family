@@ -15,6 +15,7 @@ TagManager:
   - CharacterE
   - Door
   - Furniture
+  - Trainer
   layers:
   - Default
   - TransparentFX

@@ -9792,6 +9792,23 @@ Transform:
   - {fileID: 1257757979}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1193624139 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8571774606657720401, guid: d4db3e6007cdbf3419ad8041c64d3ef1, type: 3}
+  m_PrefabInstance: {fileID: 8688583808341818988}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1193624145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193624139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e203630e7b9c5c94182ebee71a1da964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1194796316
 GameObject:
   m_ObjectHideFlags: 0
@@ -14543,6 +14560,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trainer
       objectReference: {fileID: 0}
+    - target: {fileID: -8653719598885068355, guid: b7ccca0fe076e0140a7fdbbe39face5c, type: 3}
+      propertyPath: m_TagString
+      value: Trainer
+      objectReference: {fileID: 0}
     - target: {fileID: -8244691016477402259, guid: b7ccca0fe076e0140a7fdbbe39face5c, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
@@ -14841,14 +14862,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02af84a5e6042e04d875b82ffcdc33f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animatedImages:
+  images:
   - {fileID: 1773599618}
   - {fileID: 1640347806}
   - {fileID: 763434879}
   - {fileID: 690648635}
   startPoint: {fileID: 140910964}
   endPoint: {fileID: 1998114999}
-  imageMoveSpeed: 0.5
 --- !u!61 &1684404704
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32827,7 +32847,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8571774606657720401, guid: d4db3e6007cdbf3419ad8041c64d3ef1, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1193624145}
   m_SourcePrefab: {fileID: 100100000, guid: d4db3e6007cdbf3419ad8041c64d3ef1, type: 3}
 --- !u!212 &8718008157065841238
 SpriteRenderer:
