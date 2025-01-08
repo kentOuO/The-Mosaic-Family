@@ -9797,7 +9797,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8571774606657720401, guid: d4db3e6007cdbf3419ad8041c64d3ef1, type: 3}
   m_PrefabInstance: {fileID: 8688583808341818988}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1193624145
+--- !u!114 &1193624151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14795,7 +14795,7 @@ PrefabInstance:
       addedObject: {fileID: 1684404702}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: b7ccca0fe076e0140a7fdbbe39face5c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1684404704}
+      addedObject: {fileID: 1684404706}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: b7ccca0fe076e0140a7fdbbe39face5c, type: 3}
 --- !u!1 &1684404698 stripped
 GameObject:
@@ -14810,7 +14810,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684404698}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -14869,7 +14869,7 @@ MonoBehaviour:
   - {fileID: 690648635}
   startPoint: {fileID: 140910964}
   endPoint: {fileID: 1998114999}
---- !u!61 &1684404704
+--- !u!61 &1684404706
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14901,7 +14901,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 32.354885, y: 9.794983}
+  m_Offset: {x: 28.140762, y: 9.423524}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -14912,7 +14912,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 12.170853, y: 39.60356}
+  m_Size: {x: 29.58406, y: 31.93833}
   m_EdgeRadius: 0
 --- !u!1 &1691133043
 GameObject:
@@ -32850,7 +32850,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8571774606657720401, guid: d4db3e6007cdbf3419ad8041c64d3ef1, type: 3}
       insertIndex: 5
-      addedObject: {fileID: 1193624145}
+      addedObject: {fileID: 1193624151}
   m_SourcePrefab: {fileID: 100100000, guid: d4db3e6007cdbf3419ad8041c64d3ef1, type: 3}
 --- !u!212 &8718008157065841238
 SpriteRenderer:
