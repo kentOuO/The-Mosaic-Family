@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TrainerExercise : MonoBehaviour
 {
@@ -12,14 +11,23 @@ public class TrainerExercise : MonoBehaviour
     public Transform endPoint;   // End point for the images
 
     private bool canSpawn = false; // Flag to control image spawning
+    private bool isPlayerInside = false; // Prevent multiple triggers
 
     private int previousChoice = -1; // To track the previous animation choice
     private int repeatCount = 0;     // To count consecutive repeats
+
+    public float normalSpeed = 1f;  // Normal animation speed
+    public float maxSpeed = 4f;     // Maximum animation speed
+    public float idleMinTime = 0f;  // Minimum time between idle animations
+    public float idleMaxTime = 4f;  // Maximum time between idle animations
+
+    private Coroutine speedIncreaseCoroutine; // Coroutine reference
 
     void Start()
     {
         animator = GetComponent<Animator>();
         fixedPosition = transform.position; // Record the NPC's current position
+        animator.speed = normalSpeed;       // Initialize animation speed to normal
         StartCoroutine(RandomlyPlayAnimations());
     }
 
@@ -60,11 +68,14 @@ public class TrainerExercise : MonoBehaviour
                 }
 
                 // Wait for the directional animation to complete
-                yield return new WaitForSeconds(1.4f);
+                yield return new WaitForSeconds(1.4f / animator.speed);
 
                 // Play the idle animation
                 animator.SetTrigger("isIdle");
-                yield return new WaitForSeconds(Random.Range(2f, 4f)); // Wait before the next animation
+
+                // Wait for a random interval before the next animation (minimum idleMinTime)
+                float idleWait = Random.Range(idleMinTime, idleMaxTime);
+                yield return new WaitForSeconds(idleWait / animator.speed);
             }
             else
             {
@@ -110,20 +121,52 @@ public class TrainerExercise : MonoBehaviour
     // Detect if the player with "CharacterA" tag enters the trigger area
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("CharacterA"))
+        if (other.CompareTag("CharacterA") && !isPlayerInside)
         {
-            canSpawn = true; // Allow image spawning when the player enters the area
-            Debug.Log("Player entered the area, canSpawn set to true.");
+            isPlayerInside = true; // Mark player as inside the trigger
+            canSpawn = true;       // Allow image spawning when the player enters the area
+
+            // Start increasing the animation speed gradually
+            if (speedIncreaseCoroutine == null)
+            {
+                speedIncreaseCoroutine = StartCoroutine(IncreaseAnimationSpeed());
+            }
+
+            Debug.Log("Player entered the area, animation speed is gradually increasing.");
         }
     }
 
     // Detect if the player with "CharacterA" tag exits the trigger area
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("CharacterA"))
+        if (other.CompareTag("CharacterA") && isPlayerInside)
         {
-            canSpawn = false; // Stop image spawning when the player exits the area
-            Debug.Log("Player exited the area, canSpawn set to false.");
+            isPlayerInside = false; // Mark player as outside the trigger
+            canSpawn = false;       // Stop image spawning when the player exits the area
+
+            // Stop increasing the animation speed and reset it
+            if (speedIncreaseCoroutine != null)
+            {
+                StopCoroutine(speedIncreaseCoroutine);
+                speedIncreaseCoroutine = null;
+            }
+            animator.speed = normalSpeed; // Reset animation speed back to normal
+
+            Debug.Log("Player exited the area, animation speed reset.");
+        }
+    }
+
+    // Coroutine to gradually increase animation speed
+    IEnumerator IncreaseAnimationSpeed()
+    {
+        float incrementStep = 0.1f;  // Small increments to increase speed
+        float incrementDelay = 2f; // Delay between each increment
+
+        while (animator.speed < maxSpeed)
+        {
+            animator.speed += incrementStep; // Gradually increase speed
+            animator.speed = Mathf.Clamp(animator.speed, normalSpeed, maxSpeed); // Clamp to max speed
+            yield return new WaitForSeconds(incrementDelay); // Wait for a small delay
         }
     }
 
