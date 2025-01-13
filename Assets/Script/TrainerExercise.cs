@@ -9,6 +9,7 @@ public class TrainerExercise : MonoBehaviour
     public GameObject[] images; // Array to hold the 4 images to spawn
     public Transform startPoint; // Starting point for the images
     public Transform endPoint;   // End point for the images
+    public GameObject detectImage; // The image in the center to detect the actions
 
     private bool canSpawn = false; // Flag to control image spawning
     private bool isPlayerInside = false; // Prevent multiple triggers
@@ -95,12 +96,12 @@ public class TrainerExercise : MonoBehaviour
             spawnedImage.transform.SetParent(GameObject.Find("Canvas").transform); // Parent it to the canvas
 
             // Move the image to the end point over time
-            StartCoroutine(MoveImage(spawnedImage, startPoint.position, endPoint.position));
+            StartCoroutine(MoveImage(spawnedImage, startPoint.position, endPoint.position, imageIndex));
         }
     }
 
     // Coroutine to move the image from start point to end point and destroy it when it reaches the end point
-    IEnumerator MoveImage(GameObject image, Vector3 start, Vector3 end)
+    IEnumerator MoveImage(GameObject image, Vector3 start, Vector3 end, int imageIndex)
     {
         float timeToMove = 2f; // Time for the image to move
         float elapsedTime = 0f;
@@ -113,6 +114,10 @@ public class TrainerExercise : MonoBehaviour
         }
 
         image.transform.position = end; // Ensure it reaches the end point
+
+        // Check if Sister pressed the correct button for scoring
+        SisterExerciseControl sisterControl = FindObjectOfType<SisterExerciseControl>();
+        sisterControl.CheckAction(imageIndex);
 
         // Destroy the image once it reaches the end point
         Destroy(image);
@@ -159,8 +164,8 @@ public class TrainerExercise : MonoBehaviour
     // Coroutine to gradually increase animation speed
     IEnumerator IncreaseAnimationSpeed()
     {
-        float incrementStep = 0.1f;  // Small increments to increase speed
-        float incrementDelay = 2f; // Delay between each increment
+        float incrementStep = 0.2f;  // Small increments to increase speed
+        float incrementDelay = 5f; // Delay between each increment
 
         while (animator.speed < maxSpeed)
         {
