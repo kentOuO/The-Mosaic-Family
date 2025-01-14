@@ -26,6 +26,7 @@ public class TrainerExercise : MonoBehaviour
 
     void Start()
     {
+        detectImage.SetActive(false);
         animator = GetComponent<Animator>();
         fixedPosition = transform.position; // Record the NPC's current position
         animator.speed = normalSpeed;       // Initialize animation speed to normal
@@ -131,6 +132,9 @@ public class TrainerExercise : MonoBehaviour
             isPlayerInside = true; // Mark player as inside the trigger
             canSpawn = true;       // Allow image spawning when the player enters the area
 
+            // Show the detect image
+            detectImage.SetActive(true);
+
             // Start increasing the animation speed gradually
             if (speedIncreaseCoroutine == null)
             {
@@ -141,13 +145,15 @@ public class TrainerExercise : MonoBehaviour
         }
     }
 
-    // Detect if the player with "CharacterA" tag exits the trigger area
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("CharacterA") && isPlayerInside)
         {
             isPlayerInside = false; // Mark player as outside the trigger
             canSpawn = false;       // Stop image spawning when the player exits the area
+
+            // Hide the detect image
+            detectImage.SetActive(false);
 
             // Stop increasing the animation speed and reset it
             if (speedIncreaseCoroutine != null)

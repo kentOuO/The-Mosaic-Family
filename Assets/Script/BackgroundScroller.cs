@@ -4,7 +4,7 @@ public class BackgroundScroller : MonoBehaviour
 {
     public RectTransform background1;
     public RectTransform background2;
-    public float scrollSpeed = 50f;
+    public float scrollSpeed = 80f;
     public float preGameScrollSpeed = 20f;
     private float initialScrollSpeed = 450f;
     public RockSpawner rockSpawner;

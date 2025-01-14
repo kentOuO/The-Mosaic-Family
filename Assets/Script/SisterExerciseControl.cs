@@ -132,29 +132,40 @@ public class SisterExerciseControl : MonoBehaviour
     // Check if the Sister pressed the correct button when the image is detected
     public void CheckAction(int imageIndex)
     {
+        bool isCorrect = false;
+
         if (lastTrainerAction == "Up" && imageIndex == 0) // Trainer action is "Up" and the image is "Up"
         {
             score += 10; // Add score
-            Debug.Log("Correct! Score: " + score);
+            isCorrect = true;
         }
         else if (lastTrainerAction == "Down" && imageIndex == 1) // Trainer action is "Down" and the image is "Down"
         {
             score += 10;
-            Debug.Log("Correct! Score: " + score);
+            isCorrect = true;
         }
         else if (lastTrainerAction == "Left" && imageIndex == 2) // Trainer action is "Left" and the image is "Left"
         {
             score += 10;
-            Debug.Log("Correct! Score: " + score);
+            isCorrect = true;
         }
         else if (lastTrainerAction == "Right" && imageIndex == 3) // Trainer action is "Right" and the image is "Right"
         {
             score += 10;
+            isCorrect = true;
+        }
+
+        if (isCorrect)
+        {
             Debug.Log("Correct! Score: " + score);
         }
         else
         {
             Debug.Log("Miss! Score remains: " + score);
         }
+
+        // Reset lastTrainerAction after checking
+        lastTrainerAction = "";
     }
+
 }
