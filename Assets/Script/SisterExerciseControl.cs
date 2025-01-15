@@ -13,6 +13,9 @@ public class SisterExerciseControl : MonoBehaviour
     private string lastTrainerAction = ""; // Store last trainer's action for comparison
     private int score = 0; // Track score
 
+    private float cooldownTime = 0.5f; // Cooldown time between inputs
+    private float lastActionTime = 0f; // Last time an action was performed
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -34,26 +37,34 @@ public class SisterExerciseControl : MonoBehaviour
     // Handle input and set animation parameters
     private void HandleTrainerInput()
     {
+
+        if (Time.time - lastActionTime < cooldownTime)
+        return;
+
         // Check for specific key presses and set the corresponding triggers
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             PlayAnimation("isUp");
             lastTrainerAction = "Up";
+            lastActionTime = Time.time;
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             PlayAnimation("isDown");
             lastTrainerAction = "Down";
+            lastActionTime = Time.time;
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             PlayAnimation("isRight");
             lastTrainerAction = "Right";
+            lastActionTime = Time.time;
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             PlayAnimation("isLeft");
             lastTrainerAction = "Left";
+            lastActionTime = Time.time;
         }
     }
 
@@ -130,29 +141,48 @@ public class SisterExerciseControl : MonoBehaviour
     }
 
     // Check if the Sister pressed the correct button when the image is detected
-    public void CheckAction(int imageIndex)
+    public void CheckAction(int imageIndex, float proximity)
     {
         bool isCorrect = false;
+        int pointsToAdd = 0;
 
-        if (lastTrainerAction == "Up" && imageIndex == 0) // Trainer action is "Up" and the image is "Up"
+        // 判斷當圖片是否接近 detectImage (範圍小於某個值)
+        if (proximity < 60f) // 0 - 100範圍
         {
-            score += 10; // Add score
-            isCorrect = true;
+            pointsToAdd = 10; // 加10分
         }
-        else if (lastTrainerAction == "Down" && imageIndex == 1) // Trainer action is "Down" and the image is "Down"
+        else if (proximity >= 60f && proximity < 150f) // 100 - 150範圍
         {
-            score += 10;
-            isCorrect = true;
+            pointsToAdd = 5; // 加5分
         }
-        else if (lastTrainerAction == "Left" && imageIndex == 2) // Trainer action is "Left" and the image is "Left"
+        else if (proximity >= 150f && proximity < 600f) // 150 - 200範圍
         {
-            score += 10;
-            isCorrect = true;
+            pointsToAdd = 2; // 加2分
         }
-        else if (lastTrainerAction == "Right" && imageIndex == 3) // Trainer action is "Right" and the image is "Right"
+
+        // 判斷動作是否正確
+        if (proximity < 200f) // 確保 proximity 仍然在合理範圍內
         {
-            score += 10;
-            isCorrect = true;
+            if (lastTrainerAction == "Up" && imageIndex == 0) // Trainer action is "Up" and the image is "Up"
+            {
+                score += pointsToAdd; // 根據距離加分
+                isCorrect = true;
+            }
+            else if (lastTrainerAction == "Down" && imageIndex == 1) // Trainer action is "Down" and the image is "Down"
+            {
+                score += pointsToAdd;
+                isCorrect = true;
+            }
+            else if (lastTrainerAction == "Left" && imageIndex == 2) // Trainer action is "Left" and the image is "Left"
+            {
+                score += pointsToAdd;
+                isCorrect = true;
+            }
+            else if (lastTrainerAction == "Right" && imageIndex == 3) // Trainer action is "Right" and the image is "Right"
+            {
+                score += pointsToAdd;
+                isCorrect = true;
+            }
         }
 
         if (isCorrect)
@@ -161,7 +191,7 @@ public class SisterExerciseControl : MonoBehaviour
         }
         else
         {
-            Debug.Log("Miss! Score remains: " + score);
+            //Debug.Log("Miss! Score remains: " + score);
         }
 
         // Reset lastTrainerAction after checking

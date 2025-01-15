@@ -104,21 +104,23 @@ public class TrainerExercise : MonoBehaviour
     // Coroutine to move the image from start point to end point and destroy it when it reaches the end point
     IEnumerator MoveImage(GameObject image, Vector3 start, Vector3 end, int imageIndex)
     {
-        float timeToMove = 2f; // Time for the image to move
+        float timeToMove = 2.5f; // Time for the image to move
         float elapsedTime = 0f;
 
         while (elapsedTime < timeToMove)
         {
             image.transform.position = Vector3.Lerp(start, end, elapsedTime / timeToMove);
             elapsedTime += Time.deltaTime;
+
+            // Calculate proximity to detectImage
+            float proximity = Vector3.Distance(image.transform.position, detectImage.transform.position);
+            SisterExerciseControl sisterControl = FindObjectOfType<SisterExerciseControl>();
+            sisterControl.CheckAction(imageIndex, proximity);
+
             yield return null;
         }
 
         image.transform.position = end; // Ensure it reaches the end point
-
-        // Check if Sister pressed the correct button for scoring
-        SisterExerciseControl sisterControl = FindObjectOfType<SisterExerciseControl>();
-        sisterControl.CheckAction(imageIndex);
 
         // Destroy the image once it reaches the end point
         Destroy(image);
